@@ -18,7 +18,7 @@ const PokeCard = ({loading=false}) => {
                             the day this Pokémon is born. 
                             The seed slowly grows larger.</p>
                         <Tag color="green">Grass</Tag>
-                        <Tag color="Purple">Poison</Tag>
+                        <Tag color="purple">Poison</Tag>
                     </>
                 }
             />
