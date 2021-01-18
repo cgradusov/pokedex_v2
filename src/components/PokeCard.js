@@ -7,7 +7,7 @@ const { Meta } = Card;
 
 const PokeCard = ({loading=false, img_url, title, description, tags}) => {
     return (
-        <Card style={{ width: 300, marginTop: 16 }} loading={loading}>
+        <Card loading={loading}>
             <Meta
                 avatar={
                     <Avatar src={img_url} />
