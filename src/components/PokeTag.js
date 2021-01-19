@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { Tag } from 'antd';
+import { capitalizeString } from "../utils/stringUtils";
 
 const colorsMap = {
     grass: 'green',
@@ -9,7 +10,7 @@ const colorsMap = {
 
 const PokeTag = ({ type }) => {
     return (
-        <Tag color={colorsMap[type.toLowerCase()]}>{type}</Tag>
+        <Tag color={colorsMap[type]}>{capitalizeString(type)}</Tag>
     )
 }
 
