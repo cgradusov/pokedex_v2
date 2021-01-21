@@ -34,11 +34,11 @@ const PokeList = ({ pokeList }) => {
                                 <Col key={j} span={6} offset={j % 3 == 0 ? 2 : 1}>
                                    <PokeCard 
                                         key={el.id}
-                                        img_url="https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png"
                                         num={`${el.id}`}
                                         name={el.name}
-                                        description={el.description}
-                                        tags={el.types}
+                                        specs={el.specs}
+                                        description={"test"}
+                                        types={el.types}
                                     /> 
                                 </Col>
                             ))

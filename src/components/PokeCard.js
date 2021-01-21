@@ -6,17 +6,26 @@ import { capitalizeString, formatNumber } from "../utils/stringUtils";
 
 const { Meta } = Card;
 
-const PokeCard = ({loading=false, img_url, name, num, description, tags}) => {
+const PokeCard = ({loading=false, name, num, specs, types}) => {
+    const { flavor_text_entries } = specs;
+    const filteredFlavorTextEntries = flavor_text_entries.filter((el) => (
+        el.language.name === 'en' && el.version.name === 'sword'
+    ));
+
+    const { flavor_text } = filteredFlavorTextEntries[0]
+
+    const tags = types.map(el => (el.type.name));
+    
     return (
         <Card loading={loading}>
             <Meta
                 avatar={
-                    <Avatar src={img_url} />
+                    <Avatar src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${formatNumber(num)}.png`} />
                 }
                 title={capitalizeString(name) + ' #' + formatNumber(num)}
                 description={
                     <>
-                        <p>{description}</p>
+                        <p>{flavor_text}</p>
                         {tags.map(type => (
                             <PokeTag type={type} key={type} />
                         ))}
