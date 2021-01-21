@@ -5,7 +5,7 @@ import { Row, Col } from 'antd';
 import { fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 
-const PokeList = ({ pokeList }) => {
+const PokeList = ({ pokeList, loading }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const PokeList = ({ pokeList }) => {
                                   name={el.name}
                                   specs={el.specs}
                                   types={el.types}
+                                  loading={loading}
                                 />
                               </Col>
                             ))
@@ -52,6 +53,7 @@ const PokeList = ({ pokeList }) => {
 
 const mapState = (state) => ({
   pokeList: state.pokeList.pokemonsList,
+  loading: state.pokeList.loading,
 });
 
 export default connect(mapState, null)(PokeList);

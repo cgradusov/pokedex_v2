@@ -16,7 +16,7 @@ const PokeCard = ({
   ));
 
   // eslint-disable-next-line camelcase
-  const { flavor_text } = filteredFlavorTextEntries[0];
+  const { flavor_text } = filteredFlavorTextEntries[0] ?? '';
 
   const tags = types.map((el) => (el.type.name));
 

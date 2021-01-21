@@ -20,12 +20,17 @@ const pokemons = createSlice({
     getPokemonsLinksStart(state) {
       state.loading = true;
       state.error = null;
+      state.pokemonsList = Array.from(
+        { length: state.limit },
+        () => ({
+          id: 1, name: '', specs: { flavor_text_entries: [] }, types: [],
+        }),
+      );
     },
     getPokemonsLinksSuccess(state, action) {
       state.pokemonsLinks = action.payload.results;
       state.count = action.payload.count;
       // state.next = action.payload.next
-      state.loading = false;
       state.error = null;
     },
     getPokemonsLinksFailure(state, action) {
@@ -35,6 +40,7 @@ const pokemons = createSlice({
 
     getPokemonsSuccess(state, action) {
       state.pokemonsList = action.payload;
+      state.loading = false;
     },
   },
 });
