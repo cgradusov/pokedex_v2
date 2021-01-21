@@ -12,7 +12,7 @@ const PokeCard = ({
   // eslint-disable-next-line camelcase
   const { flavor_text_entries } = specs;
   const filteredFlavorTextEntries = flavor_text_entries.filter((el) => (
-    el.language.name === 'en' && el.version.name === 'sword'
+    el.language.name === 'en' && (el.version.name === 'sword' || el.version.name === 'y')
   ));
 
   // eslint-disable-next-line camelcase
