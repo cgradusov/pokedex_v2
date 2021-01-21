@@ -1,8 +1,8 @@
-import { combineReducers } from "@reduxjs/toolkit";
-import pokeListReducer from "../features/pokeList/pokeListSlice";
+import { combineReducers } from '@reduxjs/toolkit';
+import pokeListReducer from '../features/pokeList/pokeListSlice';
 
 const rootReducer = combineReducers({
-    pokeList: pokeListReducer
-})
+  pokeList: pokeListReducer,
+});
 
-export default rootReducer
+export default rootReducer;
