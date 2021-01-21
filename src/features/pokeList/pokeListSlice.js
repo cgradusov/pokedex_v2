@@ -33,8 +33,8 @@ const pokemons = createSlice({
       state.error = action.payload;
     },
 
-    getPokemonSuccess(state, action) {
-      state.pokemonsList.push(action.payload);
+    getPokemonsSuccess(state, action) {
+      state.pokemonsList = action.payload;
     },
   },
 });
@@ -44,7 +44,7 @@ export const {
   getPokemonsLinksSuccess,
   getPokemonsLinksFailure,
 
-  getPokemonSuccess,
+  getPokemonsSuccess,
 } = pokemons.actions;
 
 export default pokemons.reducer;
@@ -52,15 +52,19 @@ export default pokemons.reducer;
 export const fetchPokemons = () => async (dispatch) => {
   try {
     dispatch(getPokemonsLinksStart());
+
     const pokemonsLinks = await getPokemonsLinks();
     dispatch(getPokemonsLinksSuccess(pokemonsLinks));
 
-    pokemonsLinks.results.map(async (poke) => {
+    const pokemonsListPromises = pokemonsLinks.results.map(async (poke) => {
       dispatch(getPokemonsLinksStart());
       const pokemon = await getPokemon(poke.name);
       const pokemonSpecs = await getPokemonSpecs(poke.name);
-      dispatch(getPokemonSuccess({ ...pokemon, specs: pokemonSpecs }));
+      return { ...pokemon, specs: pokemonSpecs };
     });
+
+    const pokemonsList = await Promise.all(pokemonsListPromises);
+    dispatch(getPokemonsSuccess(pokemonsList));
   } catch (err) {
     dispatch(getPokemonsLinksFailure(err));
   }
