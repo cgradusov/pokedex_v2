@@ -38,7 +38,6 @@ const PokeList = ({ pokeList }) => {
                                   num={`${el.id}`}
                                   name={el.name}
                                   specs={el.specs}
-                                  description="test"
                                   types={el.types}
                                 />
                               </Col>
