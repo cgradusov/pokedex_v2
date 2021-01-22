@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  Input, Row, Col, Divider,
+  Row, Col, Divider,
 } from 'antd';
 
-const { Search } = Input;
+import PokeSearch from '../features/pokeSearch/PokeSearch';
 
 const PokeHeader = () => (
   <>
@@ -12,7 +12,7 @@ const PokeHeader = () => (
         <h2 style={{ margin: '0.5rem 0 0 0' }}>Pokedex</h2>
       </Col>
       <Col span={6}>
-        <Search placeholder="Name or number" onSearch={{}} enterButton />
+        <PokeSearch />
       </Col>
     </Row>
     <Divider orientation="left" />
