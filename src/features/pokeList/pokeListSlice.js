@@ -3,11 +3,15 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getPokemonsLinks, getPokemon, getPokemonSpecs } from '../../api/PokeAPI';
 
 const initialState = {
+  linksLoading: true,
+  linksError: null,
+  pokemonsLinks: [],
+
   loading: true,
   error: null,
-
-  pokemonsLinks: [],
   pokemonsList: [],
+
+  pokemonsPerPage: 18,
   limit: 18,
   offset: 0,
   count: 0,
@@ -19,8 +23,8 @@ const pokemons = createSlice({
   initialState,
   reducers: {
     getPokemonsLinksStart(state) {
-      state.loading = true;
-      state.error = null;
+      state.linksLoading = true;
+      state.linksError = null;
       state.pokemonsList = Array.from(
         { length: state.limit },
         () => ({
@@ -31,22 +35,31 @@ const pokemons = createSlice({
     getPokemonsLinksSuccess(state, action) {
       state.pokemonsLinks = action.payload.results;
       state.count = action.payload.count;
-      // state.next = action.payload.next
-      state.error = null;
+      state.linksLoading = false;
+      state.linksError = null;
     },
     getPokemonsLinksFailure(state, action) {
-      state.loading = false;
-      state.error = action.payload;
+      state.linksLoading = false;
+      state.linksError = action.payload;
     },
 
+    getPokemonsStart(state) {
+      state.loading = true;
+      state.error = null;
+    },
     getPokemonsSuccess(state, action) {
       state.pokemonsList = action.payload;
       state.loading = false;
     },
+    getPokemonsFailure(state, action) {
+      state.loading = action.payload.loading;
+      state.error = action.payload.err;
+    },
 
     changePageNumber(state, action) {
       state.pageNumber = action.payload;
-      state.offset = state.limit * (action.payload - 1);
+      state.limit = state.pokemonsPerPage * action.payload;
+      state.offset = state.pokemonsPerPage * (action.payload - 1);
     },
   },
 });
@@ -56,21 +69,33 @@ export const {
   getPokemonsLinksSuccess,
   getPokemonsLinksFailure,
 
+  getPokemonsStart,
   getPokemonsSuccess,
+  getPokemonsFailure,
+
   changePageNumber,
 } = pokemons.actions;
 
 export default pokemons.reducer;
-
-export const fetchPokemons = (limit, offset) => async (dispatch) => {
+export const fetchPokemonsLinks = () => async (dispatch) => {
   try {
     dispatch(getPokemonsLinksStart());
-
-    const pokemonsLinks = await getPokemonsLinks(limit, offset);
+    const pokemonsLinks = await getPokemonsLinks();
     dispatch(getPokemonsLinksSuccess(pokemonsLinks));
+  } catch (err) {
+    dispatch(getPokemonsLinksFailure());
+  }
+};
 
-    const pokemonsListPromises = pokemonsLinks.results.map(async (poke) => {
-      dispatch(getPokemonsLinksStart());
+export const fetchPokemons = (pokeLinks, limit, offset) => async (dispatch) => {
+  try {
+    if (pokeLinks.length === 0) {
+      throw Error('Emply pokemons links');
+    }
+    dispatch(getPokemonsStart());
+    const pokeSlice = pokeLinks.slice(offset, limit);
+
+    const pokemonsListPromises = pokeSlice.map(async (poke) => {
       const pokemon = await getPokemon(poke.name);
       const pokemonSpecs = await getPokemonSpecs(poke.name);
       return { ...pokemon, specs: pokemonSpecs };
@@ -79,6 +104,9 @@ export const fetchPokemons = (limit, offset) => async (dispatch) => {
     const pokemonsList = await Promise.all(pokemonsListPromises);
     dispatch(getPokemonsSuccess(pokemonsList));
   } catch (err) {
-    dispatch(getPokemonsLinksFailure(err));
+    dispatch(getPokemonsFailure({
+      err: err.toString(),
+      loading: pokeLinks.length === 0,
+    }));
   }
 };

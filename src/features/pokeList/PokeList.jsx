@@ -2,17 +2,21 @@
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Row, Col, Pagination } from 'antd';
-import { fetchPokemons, changePageNumber } from './pokeListSlice';
+import { fetchPokemonsLinks, fetchPokemons, changePageNumber } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 
 const PokeList = ({
-  pokeList, loading, limit, offset, count, pageNumber,
+  pokeLinks, pokeList, loading, linksLoading, limit, offset, count, pageNumber,
 }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPokemons(limit, offset));
-  }, [pageNumber]);
+    dispatch(fetchPokemonsLinks());
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchPokemons(pokeLinks, limit, offset));
+  }, [pokeLinks, pageNumber]);
 
   const chunksPokeList = pokeList.reduce((acc, el, index) => {
     if (index % 3 === 0) {
@@ -24,6 +28,8 @@ const PokeList = ({
     acc[lastChunkIndex].push(el);
     return acc;
   }, []);
+
+  const isLoading = loading || linksLoading;
 
   return (
     <>
@@ -41,7 +47,7 @@ const PokeList = ({
                                   name={el.name}
                                   specs={el.specs}
                                   types={el.types}
-                                  loading={loading}
+                                  loading={isLoading}
                                 />
                               </Col>
                             ))
@@ -65,8 +71,10 @@ const PokeList = ({
 };
 
 const mapState = (state) => ({
+  pokeLinks: state.pokeList.pokemonsLinks,
   pokeList: state.pokeList.pokemonsList,
   loading: state.pokeList.loading,
+  linksLoading: state.pokeList.linksLoading,
   limit: state.pokeList.limit,
   offset: state.pokeList.offset,
   count: state.pokeList.count,

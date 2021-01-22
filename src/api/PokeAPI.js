@@ -6,8 +6,8 @@ const fetchPokeAPI = async (uri) => {
   return data;
 };
 
-export const getPokemonsLinks = async (limit = 9, offset = 0) => {
-  const uri = `pokemon/?limit=${limit}&offset=${offset}/`;
+export const getPokemonsLinks = async () => {
+  const uri = 'pokemon/?limit=2000';
   return fetchPokeAPI(uri);
 };
 
