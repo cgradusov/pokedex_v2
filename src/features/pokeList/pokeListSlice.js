@@ -11,6 +11,7 @@ const initialState = {
   limit: 18,
   offset: 0,
   count: 0,
+  pageNumber: 1,
 };
 
 const pokemons = createSlice({
@@ -42,6 +43,11 @@ const pokemons = createSlice({
       state.pokemonsList = action.payload;
       state.loading = false;
     },
+
+    changePageNumber(state, action) {
+      state.pageNumber = action.payload;
+      state.offset = state.limit * (action.payload - 1);
+    },
   },
 });
 
@@ -51,6 +57,7 @@ export const {
   getPokemonsLinksFailure,
 
   getPokemonsSuccess,
+  changePageNumber,
 } = pokemons.actions;
 
 export default pokemons.reducer;

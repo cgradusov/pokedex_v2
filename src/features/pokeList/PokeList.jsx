@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { Row, Col } from 'antd';
-import { fetchPokemons } from './pokeListSlice';
+import { Row, Col, Pagination } from 'antd';
+import { fetchPokemons, changePageNumber } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 
 const PokeList = ({
-  pokeList, loading, limit, offset,
+  pokeList, loading, limit, offset, count, pageNumber,
 }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchPokemons(limit, offset));
-  }, []);
+  }, [pageNumber]);
 
   const chunksPokeList = pokeList.reduce((acc, el, index) => {
     if (index % 3 === 0) {
@@ -49,6 +49,17 @@ const PokeList = ({
                   </Row>
                 ))
             }
+      <Row gutter={[0, 16]} justify="center">
+        <Col style={{ margin: '15px 0' }}>
+          <Pagination
+            current={pageNumber}
+            total={count}
+            onChange={(number) => dispatch(changePageNumber(number))}
+            defaultPageSize={limit}
+            showSizeChanger={false}
+          />
+        </Col>
+      </Row>
     </>
   );
 };
@@ -59,6 +70,7 @@ const mapState = (state) => ({
   limit: state.pokeList.limit,
   offset: state.pokeList.offset,
   count: state.pokeList.count,
+  pageNumber: state.pokeList.pageNumber,
 });
 
 export default connect(mapState, null)(PokeList);
