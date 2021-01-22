@@ -8,7 +8,7 @@ const initialState = {
 
   pokemonsLinks: [],
   pokemonsList: [],
-  limit: 9,
+  limit: 18,
   offset: 0,
   count: 0,
 };
@@ -55,11 +55,11 @@ export const {
 
 export default pokemons.reducer;
 
-export const fetchPokemons = () => async (dispatch) => {
+export const fetchPokemons = (limit, offset) => async (dispatch) => {
   try {
     dispatch(getPokemonsLinksStart());
 
-    const pokemonsLinks = await getPokemonsLinks();
+    const pokemonsLinks = await getPokemonsLinks(limit, offset);
     dispatch(getPokemonsLinksSuccess(pokemonsLinks));
 
     const pokemonsListPromises = pokemonsLinks.results.map(async (poke) => {
