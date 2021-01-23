@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  filter: null,
+  filter: '',
 };
 
 const search = createSlice({
