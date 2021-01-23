@@ -64,6 +64,9 @@ const pokemons = createSlice({
       state.pageNumber = action.payload;
       state.limit = state.pokemonsPerPage * action.payload;
       state.offset = state.pokemonsPerPage * (action.payload - 1);
+
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0;
     },
   },
 });
