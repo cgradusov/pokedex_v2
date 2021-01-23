@@ -94,13 +94,22 @@ export const fetchPokemonsLinks = () => async (dispatch) => {
   }
 };
 
+const pokeLinksFilter = (filter) => {
+  if (!Number.isNaN(filter) && !Number.isNaN(parseFloat(filter))) {
+    const number = Number.parseInt(filter, 10);
+    return (el) => el.index.toString().includes(number.toString());
+  }
+
+  return (el) => el.name.includes(filter);
+};
+
 export const fetchPokemons = (pokeLinks, limit, offset, filter) => async (dispatch) => {
   try {
     if (pokeLinks.length === 0) {
       throw Error('Emply pokemons links');
     }
     dispatch(getPokemonsStart());
-    const filteredPokeLinks = filter !== '' ? pokeLinks.filter((el) => el.name.includes(filter)) : pokeLinks;
+    const filteredPokeLinks = filter !== '' ? pokeLinks.filter(pokeLinksFilter(filter)) : pokeLinks;
     const count = filteredPokeLinks.length;
     const pokeSlice = filteredPokeLinks.slice(offset, limit);
     const pokemonsListPromises = pokeSlice.map(async (poke) => {
