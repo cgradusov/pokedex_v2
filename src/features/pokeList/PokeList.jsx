@@ -38,7 +38,7 @@ const PokeList = ({
   const isLoading = loading || linksLoading;
 
   return (
-    <>
+    <div style={{ minHeight: 'calc(100% - 70px - 41px - 41px)' }}>
       {
                 chunksPokeList.map((chunk, i) => (
                   // eslint-disable-next-line react/no-array-index-key
@@ -76,7 +76,7 @@ const PokeList = ({
             : <h1>Not Found</h1>}
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 
