@@ -33,7 +33,10 @@ const pokemons = createSlice({
       );
     },
     getPokemonsLinksSuccess(state, action) {
-      state.pokemonsLinks = action.payload.results;
+      state.pokemonsLinks = action.payload.results.map((el, i) => ({
+        index: i + 1,
+        ...el,
+      }));
       state.count = action.payload.count;
       state.linksLoading = false;
       state.linksError = null;
@@ -48,7 +51,8 @@ const pokemons = createSlice({
       state.error = null;
     },
     getPokemonsSuccess(state, action) {
-      state.pokemonsList = action.payload;
+      state.pokemonsList = action.payload.pokemonsList;
+      state.count = action.payload.count;
       state.loading = false;
     },
     getPokemonsFailure(state, action) {
@@ -87,22 +91,23 @@ export const fetchPokemonsLinks = () => async (dispatch) => {
   }
 };
 
-export const fetchPokemons = (pokeLinks, limit, offset) => async (dispatch) => {
+export const fetchPokemons = (pokeLinks, limit, offset, filter) => async (dispatch) => {
   try {
     if (pokeLinks.length === 0) {
       throw Error('Emply pokemons links');
     }
     dispatch(getPokemonsStart());
-    const pokeSlice = pokeLinks.slice(offset, limit);
-
+    const filteredPokeLinks = filter !== '' ? pokeLinks.filter((el) => el.name.includes(filter)) : pokeLinks;
+    const count = filteredPokeLinks.length;
+    const pokeSlice = filteredPokeLinks.slice(offset, limit);
     const pokemonsListPromises = pokeSlice.map(async (poke) => {
       const pokemon = await getPokemon(poke.name);
-      const pokemonSpecs = await getPokemonSpecs(poke.name);
+      const pokemonSpecs = await getPokemonSpecs(poke.index);
       return { ...pokemon, specs: pokemonSpecs };
     });
 
     const pokemonsList = await Promise.all(pokemonsListPromises);
-    dispatch(getPokemonsSuccess(pokemonsList));
+    dispatch(getPokemonsSuccess({ pokemonsList, count }));
   } catch (err) {
     dispatch(getPokemonsFailure({
       err: err.toString(),

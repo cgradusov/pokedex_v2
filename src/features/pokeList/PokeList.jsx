@@ -6,7 +6,8 @@ import { fetchPokemonsLinks, fetchPokemons, changePageNumber } from './pokeListS
 import PokeCard from '../../components/PokeCard';
 
 const PokeList = ({
-  pokeLinks, pokeList, loading, linksLoading, limit, offset, count, pageNumber,
+  pokeLinks, pokeList, loading, linksLoading, limit, offset, count, pageNumber, filter,
+  pokemonsPerPage,
 }) => {
   const dispatch = useDispatch();
 
@@ -15,7 +16,12 @@ const PokeList = ({
   }, []);
 
   useEffect(() => {
-    dispatch(fetchPokemons(pokeLinks, limit, offset));
+    dispatch(changePageNumber(1));
+    dispatch(fetchPokemons(pokeLinks, pokemonsPerPage, 0, filter));
+  }, [filter]);
+
+  useEffect(() => {
+    dispatch(fetchPokemons(pokeLinks, limit, offset, filter));
   }, [pokeLinks, pageNumber]);
 
   const chunksPokeList = pokeList.reduce((acc, el, index) => {
@@ -61,7 +67,7 @@ const PokeList = ({
             current={pageNumber}
             total={count}
             onChange={(number) => dispatch(changePageNumber(number))}
-            defaultPageSize={limit}
+            defaultPageSize={pokemonsPerPage}
             showSizeChanger={false}
           />
         </Col>
@@ -79,6 +85,9 @@ const mapState = (state) => ({
   offset: state.pokeList.offset,
   count: state.pokeList.count,
   pageNumber: state.pokeList.pageNumber,
+
+  pokemonsPerPage: state.pokeList.pokemonsPerPage,
+  filter: state.pokeSearch.filter,
 });
 
 export default connect(mapState, null)(PokeList);
