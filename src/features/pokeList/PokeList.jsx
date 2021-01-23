@@ -63,13 +63,17 @@ const PokeList = ({
             }
       <Row gutter={[0, 16]} justify="center">
         <Col style={{ margin: '15px 0' }}>
-          <Pagination
-            current={pageNumber}
-            total={count}
-            onChange={(number) => dispatch(changePageNumber(number))}
-            defaultPageSize={pokemonsPerPage}
-            showSizeChanger={false}
-          />
+          {pokeList.length !== 0
+            ? (
+              <Pagination
+                current={pageNumber}
+                total={count}
+                onChange={(number) => dispatch(changePageNumber(number))}
+                defaultPageSize={pokemonsPerPage}
+                showSizeChanger={false}
+              />
+            )
+            : <h1>Not Found</h1>}
         </Col>
       </Row>
     </>
