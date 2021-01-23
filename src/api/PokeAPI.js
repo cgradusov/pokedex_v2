@@ -7,7 +7,7 @@ const fetchPokeAPI = async (uri) => {
 };
 
 export const getPokemonsLinks = async () => {
-  const uri = 'pokemon/?limit=2000';
+  const uri = 'pokemon/?limit=898';
   return fetchPokeAPI(uri);
 };
 
