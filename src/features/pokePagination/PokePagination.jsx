@@ -22,7 +22,7 @@ const PokePagination = ({
               showSizeChanger={false}
             />
           )
-          : <h1>Not Found</h1>}
+          : <div />}
       </Col>
     </Row>
   );

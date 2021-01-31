@@ -40,28 +40,30 @@ const PokeList = ({
 
   return (
     <div style={{ minHeight: 'calc(100% - 70px - 41px - 41px)' }}>
-      {
-                chunksPokeList.map((chunk, i) => (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <Row key={i} gutter={[0, 16]}>
-                    {
-                            chunk.map((el, j) => (
-                              // eslint-disable-next-line react/no-array-index-key
-                              <Col key={j} span={6} offset={j % 3 === 0 ? 2 : 1} flex>
-                                <PokeCard
-                                  key={el.id}
-                                  num={`${el.id}`}
-                                  name={el.name}
-                                  specs={el.specs}
-                                  types={el.types}
-                                  loading={isLoading}
-                                />
-                              </Col>
-                            ))
-                        }
-                  </Row>
-                ))
-            }
+      {chunksPokeList.length !== 0
+
+        ? chunksPokeList.map((chunk, i) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Row key={i} gutter={[0, 16]}>
+            {
+                  chunk.map((el, j) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Col key={j} span={6} offset={j % 3 === 0 ? 2 : 1} flex>
+                      <PokeCard
+                        key={el.id}
+                        num={`${el.id}`}
+                        name={el.name}
+                        specs={el.specs}
+                        types={el.types}
+                        loading={isLoading}
+                      />
+                    </Col>
+                  ))
+              }
+          </Row>
+        ))
+        : <Row gutter={[0, 16]} justify="center"><h1>Not Found</h1></Row>}
+
     </div>
   );
 };
