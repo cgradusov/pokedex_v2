@@ -5,7 +5,6 @@ import { Row, Col } from 'antd';
 import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
 import { changePageNumber } from '../pokePagination/pokePaginationSlice';
 import PokeCard from '../../components/PokeCard';
-import PokePagination from '../pokePagination/PokePagination';
 
 const PokeList = ({
   pokeLinks, pokeList, loading, linksLoading, limit, offset, pageNumber, filter,
@@ -63,9 +62,6 @@ const PokeList = ({
                   </Row>
                 ))
             }
-
-      <PokePagination />
-
     </div>
   );
 };
