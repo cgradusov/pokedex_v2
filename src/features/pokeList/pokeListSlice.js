@@ -11,11 +11,7 @@ const initialState = {
   error: null,
   pokemonsList: [],
 
-  pokemonsPerPage: 18,
-  limit: 18,
-  offset: 0,
   count: 0,
-  pageNumber: 1,
 };
 
 const pokemons = createSlice({
@@ -58,15 +54,6 @@ const pokemons = createSlice({
     getPokemonsFailure(state, action) {
       state.loading = action.payload.loading;
       state.error = action.payload.err;
-    },
-
-    changePageNumber(state, action) {
-      state.pageNumber = action.payload;
-      state.limit = state.pokemonsPerPage * action.payload;
-      state.offset = state.pokemonsPerPage * (action.payload - 1);
-
-      document.body.scrollTop = 0; // For Safari
-      document.documentElement.scrollTop = 0;
     },
   },
 });

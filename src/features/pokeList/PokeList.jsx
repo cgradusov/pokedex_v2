@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { Row, Col, Pagination } from 'antd';
-import { fetchPokemonsLinks, fetchPokemons, changePageNumber } from './pokeListSlice';
+import { Row, Col } from 'antd';
+import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
+import { changePageNumber } from '../pokePagination/pokePaginationSlice';
 import PokeCard from '../../components/PokeCard';
+import PokePagination from '../pokePagination/PokePagination';
 
 const PokeList = ({
-  pokeLinks, pokeList, loading, linksLoading, limit, offset, count, pageNumber, filter,
+  pokeLinks, pokeList, loading, linksLoading, limit, offset, pageNumber, filter,
   pokemonsPerPage,
 }) => {
   const dispatch = useDispatch();
@@ -61,21 +63,9 @@ const PokeList = ({
                   </Row>
                 ))
             }
-      <Row gutter={[0, 16]} justify="center">
-        <Col style={{ margin: '15px 0' }}>
-          {pokeList.length !== 0
-            ? (
-              <Pagination
-                current={pageNumber}
-                total={count}
-                onChange={(number) => dispatch(changePageNumber(number))}
-                defaultPageSize={pokemonsPerPage}
-                showSizeChanger={false}
-              />
-            )
-            : <h1>Not Found</h1>}
-        </Col>
-      </Row>
+
+      <PokePagination />
+
     </div>
   );
 };
@@ -85,12 +75,12 @@ const mapState = (state) => ({
   pokeList: state.pokeList.pokemonsList,
   loading: state.pokeList.loading,
   linksLoading: state.pokeList.linksLoading,
-  limit: state.pokeList.limit,
-  offset: state.pokeList.offset,
-  count: state.pokeList.count,
-  pageNumber: state.pokeList.pageNumber,
 
-  pokemonsPerPage: state.pokeList.pokemonsPerPage,
+  limit: state.pokePagination.limit,
+  offset: state.pokePagination.offset,
+  pageNumber: state.pokePagination.pageNumber,
+  pokemonsPerPage: state.pokePagination.pokemonsPerPage,
+
   filter: state.pokeSearch.filter,
 });
 
