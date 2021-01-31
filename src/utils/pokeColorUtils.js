@@ -38,7 +38,9 @@ const getTagStyleMixin = (type) => {
       background: `${color}15`,
     };
   }
-  const [color1, color2] = colorsMap[type];
+
+  const [color1, color2] = pokeColor;
+
   return {
     color: 'white',
     border: `1px solid ${color2}`,
