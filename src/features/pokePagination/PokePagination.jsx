@@ -56,7 +56,7 @@ const getCustomLink = (page, type, originalElement) => {
 };
 
 const PokePagination = ({
-  pokeList, match, count, pokemonsPerPage,
+  match, count, pokemonsPerPage,
 }) => {
   const { num } = match.params;
   const pageNumber = Number.parseInt(num, 10);
@@ -64,25 +64,20 @@ const PokePagination = ({
   return (
     <Row gutter={[0, 16]} justify="center">
       <Col style={{ margin: '15px 0' }}>
-        {pokeList.length !== 0
-          ? (
-            <Pagination
-              current={pageNumber}
-              total={count}
-              onChange={() => window.scrollTo(0, 0)}
-              defaultPageSize={pokemonsPerPage}
-              showSizeChanger={false}
-              itemRender={getCustomLink}
-            />
-          )
-          : <div />}
+        <Pagination
+          current={pageNumber}
+          total={count}
+          onChange={() => window.scrollTo(0, 0)}
+          defaultPageSize={pokemonsPerPage}
+          showSizeChanger={false}
+          itemRender={getCustomLink}
+        />
       </Col>
     </Row>
   );
 };
 
 const mapState = (state) => ({
-  pokeList: state.pokeList.pokemonsList,
   count: state.pokeList.count,
 
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,

@@ -4,6 +4,7 @@ import { useDispatch, connect } from 'react-redux';
 import { Row, Col } from 'antd';
 import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
+import PokePagination from '../pokePagination/PokePagination';
 
 const PokeList = ({
   pokeLinks, pokeList, loading, linksLoading, filter,
@@ -40,12 +41,14 @@ const PokeList = ({
 
   return (
     <div style={{ minHeight: 'calc(100% - 70px - 41px - 41px)' }}>
-      {chunksPokeList.length !== 0
-
-        ? chunksPokeList.map((chunk, i) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <Row key={i} gutter={[0, 16]}>
-            {
+      { chunksPokeList.length !== 0
+        ? (
+          <>
+            (
+            {chunksPokeList.map((chunk, i) => (
+              // eslint-disable-next-line react/no-array-index-key
+              <Row key={i} gutter={[0, 16]}>
+                {
                   chunk.map((el, j) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <Col key={j} span={6} offset={j % 3 === 0 ? 2 : 1} flex>
@@ -59,15 +62,17 @@ const PokeList = ({
                       />
                     </Col>
                   ))
-              }
-          </Row>
-        ))
-        : (
+                  }
+              </Row>
+            ))}
+            )
+            <PokePagination match={match} />
+          </>
+        ) : (
           <Row gutter={[0, 16]} justify="center">
             <h1>{filter === '' ? 'Loading...' : 'Not Found'}</h1>
           </Row>
         )}
-
     </div>
   );
 };

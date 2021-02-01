@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 import PokeHeader from '../components/PokeHeader';
 import PokeList from '../features/pokeList/PokeList';
-import PokePagination from '../features/pokePagination/PokePagination';
 import 'antd/dist/antd.css';
 
 const { Footer } = Layout;
@@ -18,15 +17,7 @@ const App = () => (
       <Route exact path="/">
         <Redirect to="/1" />
       </Route>
-      <Route
-        path="/:num"
-        component={(props) => (
-          <>
-            <PokeList {...props} />
-            <PokePagination {...props} />
-          </>
-        )}
-      />
+      <Route path="/:num" component={PokeList} />
     </Switch>
     <Footer style={{ textAlign: 'center' }}>
       Pokedex App ©2021 Created by
