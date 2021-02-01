@@ -33,7 +33,6 @@ const pokemons = createSlice({
         index: i + 1,
         ...el,
       }));
-      state.count = action.payload.count;
       state.linksLoading = false;
       state.linksError = null;
     },
