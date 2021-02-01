@@ -1,13 +1,65 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { useDispatch, connect } from 'react-redux';
-import { Row, Col, Pagination } from 'antd';
-import { changePageNumber } from './pokePaginationSlice';
+import { connect } from 'react-redux';
+import {
+  Row, Col, Pagination, Button,
+} from 'antd';
+import { Link } from 'react-router-dom';
+import LeftOutlined from '@ant-design/icons/LeftOutlined';
+import RightOutlined from '@ant-design/icons/RightOutlined';
+import DoubleLeftOutlined from '@ant-design/icons/DoubleLeftOutlined';
+import DoubleRightOutlined from '@ant-design/icons/DoubleRightOutlined';
+
+// eslint-disable-next-line no-unused-vars
+const getCustomLink = (page, type, originalElement) => {
+  const prefixCls = 'ant-pagination';
+  const ellipsis = <span className={`${prefixCls}-item-ellipsis`}>•••</span>;
+
+  switch (type) {
+    case 'jump-prev':
+      return (
+        <Link to={`/${page}`} className={`${prefixCls}-item-link`}>
+          <div className="ant-pagination-item-container">
+            <DoubleLeftOutlined className={`${prefixCls}-item-link-icon`} />
+            {ellipsis}
+          </div>
+        </Link>
+      );
+    case 'jump-next':
+      return (
+        <Link to={`/${page}`} className={`${prefixCls}-item-link`}>
+          <div className="ant-pagination-item-container">
+            <DoubleRightOutlined className={`${prefixCls}-item-link-icon`} />
+            {ellipsis}
+          </div>
+        </Link>
+      );
+    case 'prev':
+      return (
+        <Link to={`/${page}`} component={Button} className={`${prefixCls}-item-link`}>
+          <LeftOutlined />
+        </Link>
+      );
+    case 'next':
+      return (
+        <Link to={`/${page}`} component={Button} className={`${prefixCls}-item-link`}>
+          <RightOutlined />
+        </Link>
+      );
+    default:
+      return (
+        <Link to={`/${page}`} className={`${prefixCls}-item-link`}>
+          {page}
+        </Link>
+      );
+  }
+};
 
 const PokePagination = ({
-  pokeList, pageNumber, count, pokemonsPerPage,
+  pokeList, match, count, pokemonsPerPage,
 }) => {
-  const dispatch = useDispatch();
+  const { num } = match.params;
+  const pageNumber = Number.parseInt(num, 10);
 
   return (
     <Row gutter={[0, 16]} justify="center">
@@ -17,9 +69,10 @@ const PokePagination = ({
             <Pagination
               current={pageNumber}
               total={count}
-              onChange={(number) => dispatch(changePageNumber(number))}
+              onChange={() => window.scrollTo(0, 0)}
               defaultPageSize={pokemonsPerPage}
               showSizeChanger={false}
+              itemRender={getCustomLink}
             />
           )
           : <div />}
@@ -32,7 +85,6 @@ const mapState = (state) => ({
   pokeList: state.pokeList.pokemonsList,
   count: state.pokeList.count,
 
-  pageNumber: state.pokePagination.pageNumber,
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,
 });
 

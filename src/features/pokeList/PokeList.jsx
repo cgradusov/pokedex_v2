@@ -3,27 +3,27 @@ import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Row, Col } from 'antd';
 import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
-import { changePageNumber } from '../pokePagination/pokePaginationSlice';
 import PokeCard from '../../components/PokeCard';
 
 const PokeList = ({
-  pokeLinks, pokeList, loading, linksLoading, limit, offset, pageNumber, filter,
-  pokemonsPerPage,
+  pokeLinks, pokeList, loading, linksLoading, filter,
+  pokemonsPerPage, match,
 }) => {
+  const { num } = match.params;
+  const pageNumber = Number.parseInt(num, 10);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchPokemonsLinks());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(changePageNumber(1));
-    dispatch(fetchPokemons(pokeLinks, pokemonsPerPage, 0, filter));
-  }, [filter]);
-
-  useEffect(() => {
-    dispatch(fetchPokemons(pokeLinks, limit, offset, filter));
-  }, [pokeLinks, pageNumber]);
+    if (pokeLinks.length > 0) {
+      const limit = pokemonsPerPage * pageNumber;
+      const offset = pokemonsPerPage * (pageNumber - 1);
+      dispatch(fetchPokemons(pokeLinks, limit, offset, filter));
+    }
+  }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, filter]);
 
   const chunksPokeList = pokeList.reduce((acc, el, index) => {
     if (index % 3 === 0) {
@@ -62,7 +62,11 @@ const PokeList = ({
               }
           </Row>
         ))
-        : <Row gutter={[0, 16]} justify="center"><h1>Not Found</h1></Row>}
+        : (
+          <Row gutter={[0, 16]} justify="center">
+            <h1>{filter === '' ? 'Loading...' : 'Not Found'}</h1>
+          </Row>
+        )}
 
     </div>
   );
@@ -76,7 +80,6 @@ const mapState = (state) => ({
 
   limit: state.pokePagination.limit,
   offset: state.pokePagination.offset,
-  pageNumber: state.pokePagination.pageNumber,
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,
 
   filter: state.pokeSearch.filter,
