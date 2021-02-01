@@ -12,12 +12,20 @@ const { Footer } = Layout;
 
 const App = () => (
   <Router>
-    <PokeHeader />
     <Switch>
       <Route exact path="/">
         <Redirect to="/1" />
       </Route>
-      <Route path="/:num" component={PokeList} />
+      <Route
+        path="/:num"
+        component={(props) => (
+          <>
+            <PokeHeader {...props} />
+            <PokeList {...props} />
+
+          </>
+        )}
+      />
     </Switch>
     <Footer style={{ textAlign: 'center' }}>
       Pokedex App ©2021 Created by

@@ -11,7 +11,8 @@ import DoubleLeftOutlined from '@ant-design/icons/DoubleLeftOutlined';
 import DoubleRightOutlined from '@ant-design/icons/DoubleRightOutlined';
 
 // eslint-disable-next-line no-unused-vars
-const getCustomLink = (page, type, originalElement) => {
+const getCustomLink = (filter) => (pagenumber, type, originalElement) => {
+  const page = filter !== '' ? `${pagenumber}?filter=${filter}` : pagenumber;
   const prefixCls = 'ant-pagination';
   const ellipsis = <span className={`${prefixCls}-item-ellipsis`}>•••</span>;
 
@@ -49,14 +50,14 @@ const getCustomLink = (page, type, originalElement) => {
     default:
       return (
         <Link to={`/${page}`} className={`${prefixCls}-item-link`}>
-          {page}
+          {pagenumber}
         </Link>
       );
   }
 };
 
 const PokePagination = ({
-  match, count, pokemonsPerPage,
+  match, count, pokemonsPerPage, filter,
 }) => {
   const { num } = match.params;
   const pageNumber = Number.parseInt(num, 10);
@@ -70,7 +71,7 @@ const PokePagination = ({
           onChange={() => window.scrollTo(0, 0)}
           defaultPageSize={pokemonsPerPage}
           showSizeChanger={false}
-          itemRender={getCustomLink}
+          itemRender={getCustomLink(filter)}
         />
       </Col>
     </Row>
@@ -79,7 +80,6 @@ const PokePagination = ({
 
 const mapState = (state) => ({
   count: state.pokeList.count,
-
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,
 });
 

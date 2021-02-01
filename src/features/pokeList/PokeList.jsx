@@ -2,17 +2,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Row, Col } from 'antd';
+import queryString from 'query-string';
 import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
 
 const PokeList = ({
-  pokeLinks, pokeList, loading, linksLoading, filter,
-  pokemonsPerPage, match,
+  pokeLinks, pokeList, loading, linksLoading,
+  pokemonsPerPage, match, location,
 }) => {
   const { num } = match.params;
   const pageNumber = Number.parseInt(num, 10);
   const dispatch = useDispatch();
+  const { filter } = queryString.parse(location.search || '?filter=');
 
   useEffect(() => {
     dispatch(fetchPokemonsLinks());
@@ -66,7 +68,7 @@ const PokeList = ({
               </Row>
             ))}
             )
-            <PokePagination match={match} />
+            <PokePagination match={match} filter={filter} />
           </>
         ) : (
           <Row gutter={[0, 16]} justify="center">
@@ -82,12 +84,7 @@ const mapState = (state) => ({
   pokeList: state.pokeList.pokemonsList,
   loading: state.pokeList.loading,
   linksLoading: state.pokeList.linksLoading,
-
-  limit: state.pokePagination.limit,
-  offset: state.pokePagination.offset,
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,
-
-  filter: state.pokeSearch.filter,
 });
 
 export default connect(mapState, null)(PokeList);
