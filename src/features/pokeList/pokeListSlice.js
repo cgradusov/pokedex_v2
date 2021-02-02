@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 import { getPokemonsLinks, getPokemon, getPokemonSpecs } from '../../api/PokeAPI';
+import { formatNumber } from '../../utils/stringUtils';
 
 const initialState = {
   linksLoading: true,
@@ -31,6 +32,7 @@ const pokemons = createSlice({
     getPokemonsLinksSuccess(state, action) {
       state.pokemonsLinks = action.payload.results.map((el, i) => ({
         index: i + 1,
+        number: formatNumber((i + 1).toString()),
         ...el,
       }));
       state.linksLoading = false;
@@ -82,8 +84,7 @@ export const fetchPokemonsLinks = () => async (dispatch) => {
 
 const pokeLinksFilter = (filter) => {
   if (!Number.isNaN(filter) && !Number.isNaN(parseFloat(filter))) {
-    const number = Number.parseInt(filter, 10);
-    return (el) => el.index.toString().includes(number.toString());
+    return (el) => el.number.includes(filter);
   }
 
   return (el) => el.name.includes(filter);
