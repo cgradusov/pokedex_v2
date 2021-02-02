@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
-import { Input } from 'antd';
+import React, { useState } from 'react';
+import { Input, Form } from 'antd';
 import { useHistory } from 'react-router-dom';
 
 const { Search } = Input;
@@ -9,13 +9,27 @@ const PokeSearch = ({ location }) => {
   const history = useHistory();
   const params = new URLSearchParams(location?.search);
   const filter = params.get('filter') ?? '';
+  const [isValid, setValid] = useState(true);
+
+  const validate = (value) => /^[A-Za-z]+$|^[0-9]+$/g.test(value);
+  const onChange = (e) => {
+    const { value } = e.target;
+    setValid(validate(value) || value === '');
+  };
 
   const onSearch = (value) => {
-    history.push(value === '' ? '/1' : `/1?filter=${value}`);
+    if (isValid) {
+      history.push(value === '' ? '/1' : `/1?filter=${value}`);
+    }
   };
 
   return (
-    <Search placeholder="Name or number" defaultValue={filter} allowClear onSearch={onSearch} enterButton />
+    <Form.Item
+      validateStatus={isValid ? '' : 'error'}
+      help={isValid ? '' : 'Should be combination of numbers or alphabets'}
+    >
+      <Search onChange={onChange} placeholder="Name or number" defaultValue={filter} allowClear onSearch={onSearch} enterButton />
+    </Form.Item>
   );
 };
 
