@@ -14,7 +14,7 @@ const PokeList = ({
   const pageNumber = Number.parseInt(num, 10);
   const dispatch = useDispatch();
   const params = new URLSearchParams(location?.search);
-  const filter = params.get('filter') ?? '';
+  const filter = (params.get('filter') ?? '').toLowerCase();
 
   useEffect(() => {
     dispatch(fetchPokemonsLinks());
