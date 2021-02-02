@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Row, Col } from 'antd';
-import queryString from 'query-string';
 import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
@@ -14,7 +13,8 @@ const PokeList = ({
   const { num } = match.params;
   const pageNumber = Number.parseInt(num, 10);
   const dispatch = useDispatch();
-  const { filter } = queryString.parse(location.search || '?filter=');
+  const params = new URLSearchParams(location?.search);
+  const filter = params.get('filter') ?? '';
 
   useEffect(() => {
     dispatch(fetchPokemonsLinks());
