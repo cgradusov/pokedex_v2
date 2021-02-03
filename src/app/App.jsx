@@ -2,16 +2,18 @@
 import React from 'react';
 import { Layout } from 'antd';
 import {
-  BrowserRouter as Router, Redirect, Route, Switch,
+  Redirect, Route, Switch,
 } from 'react-router-dom';
+import { ConnectedRouter as Router } from 'connected-react-router';
 import PokeHeader from '../components/PokeHeader';
 import PokeList from '../features/pokeList/PokeList';
 import 'antd/dist/antd.css';
+import { history } from './store';
 
 const { Footer } = Layout;
 
 const App = () => (
-  <Router>
+  <Router history={history}>
     <Switch>
       <Route exact path="/">
         <Redirect to="/1" />
