@@ -11,8 +11,8 @@ import DoubleLeftOutlined from '@ant-design/icons/DoubleLeftOutlined';
 import DoubleRightOutlined from '@ant-design/icons/DoubleRightOutlined';
 
 // eslint-disable-next-line no-unused-vars
-const getCustomLink = (filter) => (pagenumber, type, originalElement) => {
-  const page = filter !== '' ? `${pagenumber}?filter=${filter}` : pagenumber;
+const getCustomLink = (search) => (pagenumber, type, originalElement) => {
+  const page = search !== '' ? `${pagenumber}?search=${search}` : pagenumber;
   const prefixCls = 'ant-pagination';
   const ellipsis = <span className={`${prefixCls}-item-ellipsis`}>•••</span>;
 
@@ -57,7 +57,7 @@ const getCustomLink = (filter) => (pagenumber, type, originalElement) => {
 };
 
 const PokePagination = ({
-  match, count, pokemonsPerPage, filter,
+  match, count, pokemonsPerPage, search,
 }) => {
   const { num } = match.params;
   const pageNumber = Number.parseInt(num, 10);
@@ -71,7 +71,7 @@ const PokePagination = ({
           onChange={() => window.scrollTo(0, 0)}
           defaultPageSize={pokemonsPerPage}
           showSizeChanger={false}
-          itemRender={getCustomLink(filter)}
+          itemRender={getCustomLink(search)}
         />
       </Col>
     </Row>

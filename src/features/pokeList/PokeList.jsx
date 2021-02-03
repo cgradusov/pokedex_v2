@@ -14,7 +14,7 @@ const PokeList = ({
   const pageNumber = Number.parseInt(num, 10);
   const dispatch = useDispatch();
   const params = new URLSearchParams(location?.search);
-  const filter = (params.get('filter') ?? '').toLowerCase();
+  const search = (params.get('search') ?? '').toLowerCase();
 
   useEffect(() => {
     dispatch(fetchPokemonsLinks());
@@ -24,9 +24,9 @@ const PokeList = ({
     if (pokeLinks.length > 0) {
       const limit = pokemonsPerPage * pageNumber;
       const offset = pokemonsPerPage * (pageNumber - 1);
-      dispatch(fetchPokemons(pokeLinks, limit, offset, filter));
+      dispatch(fetchPokemons(pokeLinks, limit, offset, search));
     }
-  }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, filter]);
+  }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, search]);
 
   const chunksPokeList = pokeList.reduce((acc, el, index) => {
     if (index % 3 === 0) {
@@ -68,11 +68,11 @@ const PokeList = ({
               </Row>
             ))}
             )
-            <PokePagination match={match} filter={filter} />
+            <PokePagination match={match} search={search} />
           </>
         ) : (
           <Row gutter={[0, 16]} justify="center">
-            <h1>{filter === '' ? 'Loading...' : 'Not Found'}</h1>
+            <h1>{search === '' ? 'Loading...' : 'Not Found'}</h1>
           </Row>
         )}
     </div>
