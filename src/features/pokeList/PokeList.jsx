@@ -45,7 +45,6 @@ const PokeList = ({
       { chunksPokeList.length !== 0
         ? (
           <>
-            (
             {chunksPokeList.map((chunk, i) => (
               // eslint-disable-next-line react/no-array-index-key
               <Row key={i} gutter={[0, 16]}>
@@ -66,7 +65,6 @@ const PokeList = ({
                   }
               </Row>
             ))}
-            )
             <PokePagination match={match} search={search} />
           </>
         ) : (
