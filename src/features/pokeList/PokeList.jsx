@@ -6,6 +6,14 @@ import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
 
+const containerStyle = {
+  minHeight: 'calc(100% - 70px - 41px - 41px)',
+  display: 'flex',
+  flexDirection: 'column',
+  rowGap: '16px',
+  marginTop: '16px',
+};
+
 const PokeList = ({
   pokeLinks, pokeList, loading, linksLoading,
   pokemonsPerPage, match, query,
@@ -41,13 +49,13 @@ const PokeList = ({
   const isLoading = loading || linksLoading;
 
   return (
-    <div style={{ minHeight: 'calc(100% - 70px - 41px - 41px)' }}>
+    <div style={containerStyle}>
       { chunksPokeList.length !== 0
         ? (
           <>
             {chunksPokeList.map((chunk, i) => (
               // eslint-disable-next-line react/no-array-index-key
-              <Row key={i} gutter={[0, 16]}>
+              <Row key={i}>
                 {
                   chunk.map((el, j) => (
                     // eslint-disable-next-line react/no-array-index-key

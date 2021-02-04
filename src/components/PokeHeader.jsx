@@ -16,7 +16,7 @@ const PokeHeader = () => (
         <PokeSearch />
       </Col>
     </Row>
-    <Divider orientation="left" style={{ margin: '12px 0' }} />
+    <Divider orientation="left" style={{ margin: '12px 0 24px 0' }} />
   </>
 );
 
