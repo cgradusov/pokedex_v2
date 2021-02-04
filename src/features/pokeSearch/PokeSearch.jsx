@@ -1,14 +1,14 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import { connect, useDispatch } from 'react-redux';
 import { Input, Form } from 'antd';
-import { useHistory } from 'react-router-dom';
+import { push } from 'connected-react-router';
 
 const { Search } = Input;
 
-const PokeSearch = ({ location }) => {
-  const history = useHistory();
-  const params = new URLSearchParams(location?.search);
-  const search = params.get('search') ?? '';
+const PokeSearch = ({ query }) => {
+  const dispatch = useDispatch();
+  const search = query.search ?? '';
   const [isValid, setValid] = useState(true);
 
   const validate = (value) => /^[A-Za-z]+$|^[0-9]+$/g.test(value);
@@ -17,9 +17,17 @@ const PokeSearch = ({ location }) => {
     setValid(validate(value) || value === '');
   };
 
-  const onSearch = (value) => {
+  const onSearch = (newSearchValue) => {
     if (isValid) {
-      history.push(value === '' ? '/1' : `/1?search=${value}`);
+      const searchParams = new URLSearchParams(query);
+
+      if (newSearchValue === '') {
+        searchParams.delete('search');
+      } else {
+        searchParams.set('search', newSearchValue);
+      }
+
+      dispatch(push(`/1?${searchParams}`));
     }
   };
 
@@ -33,4 +41,8 @@ const PokeSearch = ({ location }) => {
   );
 };
 
-export default PokeSearch;
+const mapState = (state) => ({
+  query: state.router.location.query,
+});
+
+export default connect(mapState, null)(PokeSearch);

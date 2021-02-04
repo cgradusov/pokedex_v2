@@ -8,13 +8,12 @@ import PokePagination from '../pokePagination/PokePagination';
 
 const PokeList = ({
   pokeLinks, pokeList, loading, linksLoading,
-  pokemonsPerPage, match, location,
+  pokemonsPerPage, match, query,
 }) => {
   const { num } = match.params;
   const pageNumber = Number.parseInt(num, 10);
   const dispatch = useDispatch();
-  const params = new URLSearchParams(location?.search);
-  const search = (params.get('search') ?? '').toLowerCase();
+  const search = (query.search ?? '').toLowerCase();
 
   useEffect(() => {
     dispatch(fetchPokemonsLinks());
@@ -85,6 +84,7 @@ const mapState = (state) => ({
   loading: state.pokeList.loading,
   linksLoading: state.pokeList.linksLoading,
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,
+  query: state.router.location.query,
 });
 
 export default connect(mapState, null)(PokeList);

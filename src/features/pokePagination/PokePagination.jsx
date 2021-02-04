@@ -11,15 +11,16 @@ import DoubleLeftOutlined from '@ant-design/icons/DoubleLeftOutlined';
 import DoubleRightOutlined from '@ant-design/icons/DoubleRightOutlined';
 
 // eslint-disable-next-line no-unused-vars
-const getCustomLink = (search) => (pagenumber, type, originalElement) => {
-  const page = search !== '' ? `${pagenumber}?search=${search}` : pagenumber;
+const getCustomLink = (query) => (pagenumber, type, originalElement) => {
+  const searchParams = new URLSearchParams(query);
+  const uri = `${pagenumber}?${searchParams}`;
   const prefixCls = 'ant-pagination';
   const ellipsis = <span className={`${prefixCls}-item-ellipsis`}>•••</span>;
 
   switch (type) {
     case 'jump-prev':
       return (
-        <Link to={`/${page}`} className={`${prefixCls}-item-link`}>
+        <Link to={`/${uri}`} className={`${prefixCls}-item-link`}>
           <div className="ant-pagination-item-container">
             <DoubleLeftOutlined className={`${prefixCls}-item-link-icon`} />
             {ellipsis}
@@ -28,7 +29,7 @@ const getCustomLink = (search) => (pagenumber, type, originalElement) => {
       );
     case 'jump-next':
       return (
-        <Link to={`/${page}`} className={`${prefixCls}-item-link`}>
+        <Link to={`/${uri}`} className={`${prefixCls}-item-link`}>
           <div className="ant-pagination-item-container">
             <DoubleRightOutlined className={`${prefixCls}-item-link-icon`} />
             {ellipsis}
@@ -37,19 +38,19 @@ const getCustomLink = (search) => (pagenumber, type, originalElement) => {
       );
     case 'prev':
       return (
-        <Link to={`/${page}`} component={Button} className={`${prefixCls}-item-link`}>
+        <Link to={`/${uri}`} component={Button} className={`${prefixCls}-item-link`}>
           <LeftOutlined />
         </Link>
       );
     case 'next':
       return (
-        <Link to={`/${page}`} component={Button} className={`${prefixCls}-item-link`}>
+        <Link to={`/${uri}`} component={Button} className={`${prefixCls}-item-link`}>
           <RightOutlined />
         </Link>
       );
     default:
       return (
-        <Link to={`/${page}`} className={`${prefixCls}-item-link`}>
+        <Link to={`/${uri}`} className={`${prefixCls}-item-link`}>
           {pagenumber}
         </Link>
       );
@@ -57,7 +58,7 @@ const getCustomLink = (search) => (pagenumber, type, originalElement) => {
 };
 
 const PokePagination = ({
-  match, count, pokemonsPerPage, search,
+  match, count, pokemonsPerPage, query,
 }) => {
   const { num } = match.params;
   const pageNumber = Number.parseInt(num, 10);
@@ -71,7 +72,7 @@ const PokePagination = ({
           onChange={() => window.scrollTo(0, 0)}
           defaultPageSize={pokemonsPerPage}
           showSizeChanger={false}
-          itemRender={getCustomLink(search)}
+          itemRender={getCustomLink(query)}
         />
       </Col>
     </Row>
@@ -81,6 +82,7 @@ const PokePagination = ({
 const mapState = (state) => ({
   count: state.pokeList.count,
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,
+  query: state.router.location.query,
 });
 
 export default connect(mapState, null)(PokePagination);
