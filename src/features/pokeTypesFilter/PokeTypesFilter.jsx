@@ -4,7 +4,9 @@ import { useDispatch, connect } from 'react-redux';
 import { Button, Row, Col } from 'antd';
 import { push } from 'connected-react-router';
 import PokeTag from '../../components/PokeTag';
-import { fetchPokemonsTypes, fetchPokemonsLinksByTypes, compilePokemonsLinks } from './pokeTypesFilterSlice';
+import {
+  fetchPokemonsTypes, fetchPokemonsLinksByTypes, compilePokemonsLinks, updateFilters,
+} from './pokeTypesFilterSlice';
 import { makeChunks } from '../../utils/arrayUtils';
 
 const PokeTypesFilter = ({
@@ -15,6 +17,10 @@ const PokeTypesFilter = ({
   useEffect(() => {
     dispatch(fetchPokemonsTypes());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(updateFilters(query.filters ?? ''));
+  }, [dispatch, query]);
 
   useEffect(() => {
     dispatch(fetchPokemonsLinksByTypes(types));

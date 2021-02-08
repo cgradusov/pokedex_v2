@@ -30,6 +30,14 @@ const filter = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    updateFilters(state, action) {
+      const filters = action.payload.split('-');
+
+      state.filters = filters.reduce((acc, el) => {
+        if (el.length > 0) acc[el] = true;
+        return acc;
+      }, {});
+    },
     toggleFilter(state, action) {
       const type = action.payload;
 
@@ -85,6 +93,7 @@ export const {
   getPokemonsByTypeFailure,
 
   compilePokemonsLinks,
+  updateFilters,
 } = filter.actions;
 
 export const fetchPokemonsTypes = () => async (dispatch) => {
