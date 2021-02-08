@@ -2,11 +2,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { capitalizeString } from '../utils/stringUtils';
 import getTagStyleMixin from '../utils/pokeColorUtils';
+import { toggleFilter } from '../features/pokeTypesFilter/pokeTypesFilterSlice';
 
 const PokeTag = ({ type = 'grass', width = 'inherit' }) => {
   const [isType, markType] = useState(false);
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    markType(!isType);
+    dispatch(toggleFilter(type));
+  };
 
   const stateStyles = isType ? {} : {
     color: 'grey',
@@ -34,7 +42,7 @@ const PokeTag = ({ type = 'grass', width = 'inherit' }) => {
   };
 
   return (
-    <span onClick={() => markType(!isType)} style={tagStyle}>{capitalizeString(type)}</span>
+    <span onClick={onClick} style={tagStyle}>{capitalizeString(type)}</span>
   );
 };
 
