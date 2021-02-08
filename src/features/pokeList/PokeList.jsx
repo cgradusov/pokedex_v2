@@ -5,6 +5,7 @@ import { Row, Col } from 'antd';
 import { fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
+import { makeChunks } from '../../utils/arrayUtils';
 
 const containerStyle = {
   minHeight: 'calc(100% - 70px - 41px - 41px)',
@@ -32,16 +33,7 @@ const PokeList = ({
     }
   }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, search, filters]);
 
-  const chunksPokeList = pokeList.reduce((acc, el, index) => {
-    if (index % 3 === 0) {
-      acc.push([]);
-    }
-
-    const lastChunkIndex = acc.length - 1;
-
-    acc[lastChunkIndex].push(el);
-    return acc;
-  }, []);
+  const chunksPokeList = makeChunks(pokeList, 3);
 
   return (
     <div style={containerStyle}>

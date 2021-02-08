@@ -5,6 +5,7 @@ import { Button, Row, Col } from 'antd';
 import { push } from 'connected-react-router';
 import PokeTag from '../../components/PokeTag';
 import { fetchPokemonsTypes, fetchPokemonsLinksByTypes, compilePokemonsLinks } from './pokeTypesFilterSlice';
+import { makeChunks } from '../../utils/arrayUtils';
 
 const PokeTypesFilter = ({
   types, query, filters, pokemons,
@@ -35,16 +36,7 @@ const PokeTypesFilter = ({
     dispatch(push(`/1?${searchParams}`));
   };
 
-  const chunksPokeTypes = types.reduce((acc, el, index) => {
-    if (index % 9 === 0) {
-      acc.push([]);
-    }
-
-    const lastChunkIndex = acc.length - 1;
-
-    acc[lastChunkIndex].push(el);
-    return acc;
-  }, []);
+  const chunksPokeTypes = makeChunks(types, 9);
 
   return (
     <Row justify="space-around">
