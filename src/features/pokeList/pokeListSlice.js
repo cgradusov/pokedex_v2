@@ -90,13 +90,16 @@ const pokeLinksSearch = (search) => {
   return (el) => el.name.includes(search);
 };
 
-export const fetchPokemons = (pokeLinks, limit, offset, search) => async (dispatch) => {
+const pokeLinksFilter = (filters) => (el) => filters.split('-').every((t) => el.types.includes(t));
+
+export const fetchPokemons = (pokeLinks, limit, offset, search, filters) => async (dispatch) => {
   try {
     if (pokeLinks.length === 0) {
       throw Error('Emply pokemons links');
     }
     dispatch(getPokemonsStart());
-    const filteredPokeLinks = search !== '' ? pokeLinks.filter(pokeLinksSearch(search)) : pokeLinks;
+    const searchedPokeLinks = search !== '' ? pokeLinks.filter(pokeLinksSearch(search)) : pokeLinks;
+    const filteredPokeLinks = filters !== '' ? searchedPokeLinks.filter(pokeLinksFilter(filters)) : searchedPokeLinks;
     const count = filteredPokeLinks.length;
     const pokeSlice = filteredPokeLinks.slice(offset, limit);
     const pokemonsListPromises = pokeSlice.map(async (poke) => {

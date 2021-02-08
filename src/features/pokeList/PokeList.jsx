@@ -22,6 +22,7 @@ const PokeList = ({
   const pageNumber = Number.parseInt(num, 10);
   const dispatch = useDispatch();
   const search = (query.search ?? '').toLowerCase();
+  const filters = (query.filters ?? '').toLowerCase();
 
   useEffect(() => {
     dispatch(fetchPokemonsLinks());
@@ -31,9 +32,9 @@ const PokeList = ({
     if (pokeLinks.length > 0) {
       const limit = pokemonsPerPage * pageNumber;
       const offset = pokemonsPerPage * (pageNumber - 1);
-      dispatch(fetchPokemons(pokeLinks, limit, offset, search));
+      dispatch(fetchPokemons(pokeLinks, limit, offset, search, filters));
     }
-  }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, search]);
+  }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, search, filters]);
 
   const chunksPokeList = pokeList.reduce((acc, el, index) => {
     if (index % 3 === 0) {
@@ -77,7 +78,7 @@ const PokeList = ({
           </>
         ) : (
           <Row gutter={[0, 16]} justify="center">
-            <h1>{search === '' ? 'Loading...' : 'Not Found'}</h1>
+            <h1>{search === '' && filters === '' ? 'Loading...' : 'Not Found'}</h1>
           </Row>
         )}
     </div>
@@ -85,7 +86,7 @@ const PokeList = ({
 };
 
 const mapState = (state) => ({
-  pokeLinks: state.pokeList.pokemonsLinks,
+  pokeLinks: state.pokeFilter.pokemonsLinks,
   pokeList: state.pokeList.pokemonsList,
   loading: state.pokeList.loading,
   linksLoading: state.pokeList.linksLoading,
