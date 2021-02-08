@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import { Row, Col } from 'antd';
-import { fetchPokemonsLinks, fetchPokemons } from './pokeListSlice';
+import { fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
 
@@ -15,7 +15,7 @@ const containerStyle = {
 };
 
 const PokeList = ({
-  pokeLinks, pokeList, loading, linksLoading,
+  pokeLinks, pokeList, loading,
   pokemonsPerPage, match, query,
 }) => {
   const { num } = match.params;
@@ -23,10 +23,6 @@ const PokeList = ({
   const dispatch = useDispatch();
   const search = (query.search ?? '').toLowerCase();
   const filters = (query.filters ?? '').toLowerCase();
-
-  useEffect(() => {
-    dispatch(fetchPokemonsLinks());
-  }, [dispatch]);
 
   useEffect(() => {
     if (pokeLinks.length > 0) {
@@ -47,8 +43,6 @@ const PokeList = ({
     return acc;
   }, []);
 
-  const isLoading = loading || linksLoading;
-
   return (
     <div style={containerStyle}>
       { chunksPokeList.length !== 0
@@ -67,7 +61,7 @@ const PokeList = ({
                         name={el.name}
                         specs={el.specs}
                         types={el.types}
-                        loading={isLoading}
+                        loading={loading}
                       />
                     </Col>
                   ))

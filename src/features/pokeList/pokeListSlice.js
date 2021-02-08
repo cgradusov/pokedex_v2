@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
-import { getPokemonsLinks, getPokemon, getPokemonSpecs } from '../../api/PokeAPI';
-import { formatNumber } from '../../utils/stringUtils';
+import { getPokemon, getPokemonSpecs } from '../../api/PokeAPI';
 
 const initialState = {
   linksLoading: true,
@@ -19,30 +18,6 @@ const pokemons = createSlice({
   name: 'pokemons',
   initialState,
   reducers: {
-    getPokemonsLinksStart(state) {
-      state.linksLoading = true;
-      state.linksError = null;
-      state.pokemonsList = Array.from(
-        { length: state.limit },
-        () => ({
-          id: 1, name: '', specs: { flavor_text_entries: [] }, types: [],
-        }),
-      );
-    },
-    getPokemonsLinksSuccess(state, action) {
-      state.pokemonsLinks = action.payload.results.map((el, i) => ({
-        index: i + 1,
-        number: formatNumber((i + 1).toString()),
-        ...el,
-      }));
-      state.linksLoading = false;
-      state.linksError = null;
-    },
-    getPokemonsLinksFailure(state, action) {
-      state.linksLoading = false;
-      state.linksError = action.payload;
-    },
-
     getPokemonsStart(state) {
       state.loading = true;
       state.error = null;
@@ -60,10 +35,6 @@ const pokemons = createSlice({
 });
 
 export const {
-  getPokemonsLinksStart,
-  getPokemonsLinksSuccess,
-  getPokemonsLinksFailure,
-
   getPokemonsStart,
   getPokemonsSuccess,
   getPokemonsFailure,
@@ -72,15 +43,6 @@ export const {
 } = pokemons.actions;
 
 export default pokemons.reducer;
-export const fetchPokemonsLinks = () => async (dispatch) => {
-  try {
-    dispatch(getPokemonsLinksStart());
-    const pokemonsLinks = await getPokemonsLinks();
-    dispatch(getPokemonsLinksSuccess(pokemonsLinks));
-  } catch (err) {
-    dispatch(getPokemonsLinksFailure());
-  }
-};
 
 const pokeLinksSearch = (search) => {
   if (!Number.isNaN(search) && !Number.isNaN(parseFloat(search))) {
