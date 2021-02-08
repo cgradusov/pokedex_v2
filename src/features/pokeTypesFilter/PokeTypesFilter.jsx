@@ -26,11 +26,12 @@ const PokeTypesFilter = ({
 
   const onClick = () => {
     const searchParams = new URLSearchParams(query);
+    const selectedTypes = Object.keys(filters);
 
-    if (filters.length === 0) {
+    if (selectedTypes.length === 0) {
       searchParams.delete('filters');
     } else {
-      searchParams.set('filters', filters.join('-'));
+      searchParams.set('filters', selectedTypes.join('-'));
     }
 
     dispatch(push(`/1?${searchParams}`));

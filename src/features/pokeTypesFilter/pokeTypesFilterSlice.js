@@ -4,7 +4,7 @@ import { getPokemonsTypes, getPokemonsLinksByType } from '../../api/PokeAPI';
 import { getIdFromUrl, formatNumber } from '../../utils/stringUtils';
 
 const initialState = {
-  filters: [],
+  filters: {},
   types: [],
 
   pokemons: {},
@@ -33,10 +33,10 @@ const filter = createSlice({
     toggleFilter(state, action) {
       const type = action.payload;
 
-      if (state.filters.includes(type)) {
-        state.filters = state.filters.filter((el) => el !== type);
+      if (typeof state.filters[type] === 'undefined') {
+        state.filters[type] = true;
       } else {
-        state.filters.push(type);
+        delete state.filters[type];
       }
     },
     getPokemonsByTypeStart(state) {
