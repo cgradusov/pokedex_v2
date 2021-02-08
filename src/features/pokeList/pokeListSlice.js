@@ -3,13 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { getPokemon, getPokemonSpecs } from '../../api/PokeAPI';
 
 const initialState = {
-  linksLoading: true,
-  linksError: null,
-  pokemonsLinks: [],
-
   loading: true,
   error: null,
-  pokemonsList: [],
+  pokemonsList: Array.from(
+    { length: 18 },
+    () => ({
+      id: 1, name: '', specs: { flavor_text_entries: [] }, types: [],
+    }),
+  ),
 
   count: 0,
 };
@@ -28,7 +29,7 @@ const pokemons = createSlice({
       state.loading = false;
     },
     getPokemonsFailure(state, action) {
-      state.loading = action.payload.loading;
+      state.loading = false;
       state.error = action.payload.err;
     },
   },
@@ -75,7 +76,6 @@ export const fetchPokemons = (pokeLinks, limit, offset, search, filters) => asyn
   } catch (err) {
     dispatch(getPokemonsFailure({
       err: err.toString(),
-      loading: pokeLinks.length === 0,
     }));
   }
 };

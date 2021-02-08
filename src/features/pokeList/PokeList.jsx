@@ -72,7 +72,7 @@ const PokeList = ({
           </>
         ) : (
           <Row gutter={[0, 16]} justify="center">
-            <h1>{search === '' && filters === '' ? 'Loading...' : 'Not Found'}</h1>
+            <h1>Not Found</h1>
           </Row>
         )}
     </div>
@@ -83,7 +83,6 @@ const mapState = (state) => ({
   pokeLinks: state.pokeFilter.pokemonsLinks,
   pokeList: state.pokeList.pokemonsList,
   loading: state.pokeList.loading,
-  linksLoading: state.pokeList.linksLoading,
   pokemonsPerPage: state.pokePagination.pokemonsPerPage,
   query: state.router.location.query,
 });
