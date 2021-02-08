@@ -1,22 +1,17 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React from 'react';
+import { useDispatch, connect } from 'react-redux';
 import { capitalizeString } from '../utils/stringUtils';
 import getTagStyleMixin from '../utils/pokeColorUtils';
 import { toggleFilter } from '../features/pokeTypesFilter/pokeTypesFilterSlice';
 
-const PokeTag = ({ type = 'grass', width = 'inherit' }) => {
-  const [isType, markType] = useState(false);
+const PokeTag = ({ type = 'grass', width = 'inherit', filters }) => {
+  const isSelected = filters[type] ?? false;
   const dispatch = useDispatch();
 
-  const onClick = () => {
-    markType(!isType);
-    dispatch(toggleFilter(type));
-  };
-
-  const stateStyles = isType ? {} : {
+  const stateStyles = isSelected ? {} : {
     color: 'grey',
     border: '1px solid grey',
   };
@@ -42,8 +37,14 @@ const PokeTag = ({ type = 'grass', width = 'inherit' }) => {
   };
 
   return (
-    <span onClick={onClick} style={tagStyle}>{capitalizeString(type)}</span>
+    <span onClick={() => dispatch(toggleFilter(type))} style={tagStyle}>
+      {capitalizeString(type)}
+    </span>
   );
 };
 
-export default PokeTag;
+const mapState = (state) => ({
+  filters: state.pokeFilter.filters,
+});
+
+export default connect(mapState, null)(PokeTag);
