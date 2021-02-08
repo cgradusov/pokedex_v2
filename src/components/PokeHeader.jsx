@@ -5,6 +5,7 @@ import {
 } from 'antd';
 
 import PokeSearch from '../features/pokeSearch/PokeSearch';
+import PokeTypesFilter from '../features/pokeTypesFilter/PokeTypesFilter';
 
 const PokeHeader = () => (
   <>
@@ -16,6 +17,7 @@ const PokeHeader = () => (
         <PokeSearch />
       </Col>
     </Row>
+    <PokeTypesFilter />
     <Divider orientation="left" style={{ margin: '12px 0 24px 0' }} />
   </>
 );
