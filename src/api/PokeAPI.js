@@ -17,3 +17,13 @@ export const getPokemonSpecs = async (name) => {
   const uri = `pokemon-species/${name}/`;
   return fetchPokeAPI(uri);
 };
+
+export const getPokemonsTypes = async () => {
+  const uri = 'type/';
+  return fetchPokeAPI(uri);
+};
+
+export const getPokemonsLinksByType = async (type) => {
+  const uri = `type/${type}/`;
+  return fetchPokeAPI(uri);
+};
