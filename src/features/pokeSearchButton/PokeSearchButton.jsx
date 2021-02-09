@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Button } from 'antd';
+import Button from 'antd/lib/button';
 import { SearchOutlined } from '@ant-design/icons';
 import { useDispatch, connect } from 'react-redux';
 import { push } from 'connected-react-router';

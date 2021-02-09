@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { Layout } from 'antd';
+import Layout from 'antd/lib/layout';
 import {
   Redirect, Route, Switch,
 } from 'react-router-dom';

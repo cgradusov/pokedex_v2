@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { Row, Col } from 'antd';
+import Row from 'antd/lib/row';
+import Col from 'antd/lib/col';
 import PokeTag from '../../components/PokeTag';
 import PokeSearchButton from '../pokeSearchButton/PokeSearchButton';
 import {

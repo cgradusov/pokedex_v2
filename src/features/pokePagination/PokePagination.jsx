@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { connect } from 'react-redux';
-import {
-  Row, Col, Pagination, Button,
-} from 'antd';
+import Row from 'antd/lib/row';
+import Col from 'antd/lib/col';
+import Pagination from 'antd/lib/pagination';
+import Button from 'antd/lib/button';
 import { Link } from 'react-router-dom';
 import LeftOutlined from '@ant-design/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/RightOutlined';

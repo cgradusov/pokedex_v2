@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { Input, Form } from 'antd';
+import Input from 'antd/lib/input';
+import Form from 'antd/lib/form';
 import { updateSearch, setValid } from './pokeSeachSlice';
 
 const PokeSearch = ({ query, isValid }) => {

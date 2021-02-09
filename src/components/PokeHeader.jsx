@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {
-  Row, Col, Divider,
-} from 'antd';
+import Row from 'antd/lib/row';
+import Col from 'antd/lib/col';
+import Divider from 'antd/lib/divider';
 
 import PokeSearch from '../features/pokeSearch/PokeSearch';
 import PokeTypesFilter from '../features/pokeTypesFilter/PokeTypesFilter';

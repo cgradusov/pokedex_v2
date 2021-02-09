@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Card, Avatar } from 'antd';
+import Card from 'antd/lib/card';
+import Avatar from 'antd/lib/avatar';
 import PokeTag from './PokeTag';
 import { capitalizeString, formatNumber } from '../utils/stringUtils';
 
