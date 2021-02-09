@@ -2,17 +2,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import Row from 'antd/lib/row';
-import Col from 'antd/lib/col';
 import PokeTag from '../../components/PokeTag';
-import PokeSearchButton from '../pokeSearchButton/PokeSearchButton';
 import {
   fetchPokemonsTypes, fetchPokemonsLinksByTypes, compilePokemonsLinks, updateFilters,
 } from './pokeTypesFilterSlice';
 import { makeChunks } from '../../utils/arrayUtils';
 
-const PokeTypesFilter = ({
-  types, query, pokemons,
-}) => {
+const PokeTypesFilter = ({ types, query, pokemons }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,19 +30,14 @@ const PokeTypesFilter = ({
   const chunksPokeTypes = makeChunks(types, 9);
 
   return (
-    <Row justify="space-around">
-      <Col>
-        {chunksPokeTypes.map((t, i) => (
+    <>
+      {chunksPokeTypes.map((t, i) => (
         // eslint-disable-next-line react/no-array-index-key
-          <Row key={i} style={{ marginBottom: i === 0 ? '10px' : 0 }}>
-            {t.map((el) => (<PokeTag key={el} type={el} width="60px" />))}
-          </Row>
-        ))}
-      </Col>
-      <Col align="bottom">
-        <PokeSearchButton />
-      </Col>
-    </Row>
+        <Row key={i} style={{ marginBottom: i === 0 ? '10px' : 0 }}>
+          {t.map((el) => (<PokeTag key={el} type={el} width="60px" />))}
+        </Row>
+      ))}
+    </>
   );
 };
 

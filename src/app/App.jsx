@@ -5,7 +5,7 @@ import {
   Redirect, Route, Switch,
 } from 'react-router-dom';
 import { ConnectedRouter as Router } from 'connected-react-router';
-import PokeHeader from '../components/PokeHeader';
+import PokeHeader from '../features/pokeHeader/PokeHeader';
 import PokeList from '../features/pokeList/PokeList';
 import 'antd/dist/antd.css';
 import { history } from './store';
