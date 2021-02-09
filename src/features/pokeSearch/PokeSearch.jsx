@@ -1,33 +1,23 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { Input, Form } from 'antd';
-import { push } from 'connected-react-router';
+import { updateSearch, setValid } from './pokeSeachSlice';
 
-const { Search } = Input;
-
-const PokeSearch = ({ query }) => {
+const PokeSearch = ({ query, isValid }) => {
   const dispatch = useDispatch();
   const search = query.search ?? '';
-  const [isValid, setValid] = useState(true);
+
+  useEffect(() => {
+    dispatch(updateSearch(search ?? ''));
+  }, [dispatch, search]);
 
   const validate = (value) => /^[A-Za-z]+$|^[0-9]+$/g.test(value);
   const onChange = (e) => {
     const { value } = e.target;
-    setValid(validate(value) || value === '');
-  };
-
-  const onSearch = (newSearchValue) => {
-    if (isValid) {
-      const searchParams = new URLSearchParams(query);
-
-      if (newSearchValue === '') {
-        searchParams.delete('search');
-      } else {
-        searchParams.set('search', newSearchValue);
-      }
-
-      dispatch(push(`/1?${searchParams}`));
+    const validationCheck = validate(value) || value === '';
+    if (validationCheck !== isValid) {
+      dispatch(setValid(validationCheck));
     }
   };
 
@@ -36,13 +26,14 @@ const PokeSearch = ({ query }) => {
       validateStatus={isValid ? '' : 'error'}
       help={isValid ? '' : 'Should be combination of numbers or alphabets'}
     >
-      <Search onChange={onChange} placeholder="Name or number" defaultValue={search} allowClear onSearch={onSearch} enterButton />
+      <Input onChange={onChange} onBlur={(e) => dispatch(updateSearch(e.target.value))} placeholder="Name or number" defaultValue={search} allowClear />
     </Form.Item>
   );
 };
 
 const mapState = (state) => ({
   query: state.router.location.query,
+  isValid: state.pokeSearch.isValid,
 });
 
 export default connect(mapState, null)(PokeSearch);

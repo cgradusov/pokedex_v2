@@ -1,16 +1,16 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
-import { Button, Row, Col } from 'antd';
-import { push } from 'connected-react-router';
+import { Row, Col } from 'antd';
 import PokeTag from '../../components/PokeTag';
+import PokeSearchButton from '../pokeSearchButton/PokeSearchButton';
 import {
   fetchPokemonsTypes, fetchPokemonsLinksByTypes, compilePokemonsLinks, updateFilters,
 } from './pokeTypesFilterSlice';
 import { makeChunks } from '../../utils/arrayUtils';
 
 const PokeTypesFilter = ({
-  types, query, filters, pokemons,
+  types, query, pokemons,
 }) => {
   const dispatch = useDispatch();
 
@@ -30,19 +30,6 @@ const PokeTypesFilter = ({
     dispatch(compilePokemonsLinks());
   }, [dispatch, pokemons]);
 
-  const onClick = () => {
-    const searchParams = new URLSearchParams(query);
-    const selectedTypes = Object.keys(filters);
-
-    if (selectedTypes.length === 0) {
-      searchParams.delete('filters');
-    } else {
-      searchParams.set('filters', selectedTypes.join('-'));
-    }
-
-    dispatch(push(`/1?${searchParams}`));
-  };
-
   const chunksPokeTypes = makeChunks(types, 9);
 
   return (
@@ -56,7 +43,7 @@ const PokeTypesFilter = ({
         ))}
       </Col>
       <Col align="bottom">
-        <Button type="primary" onClick={onClick} style={{ height: '100%' }}>Filter</Button>
+        <PokeSearchButton />
       </Col>
     </Row>
   );
@@ -64,10 +51,7 @@ const PokeTypesFilter = ({
 
 const mapState = (state) => ({
   types: state.pokeFilter.types,
-  filters: state.pokeFilter.filters,
-  count: state.pokeFilter.count,
   pokemons: state.pokeFilter.pokemons,
-
   query: state.router.location.query,
 });
 
