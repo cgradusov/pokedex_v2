@@ -11,11 +11,6 @@ const PokeTag = ({ type = 'grass', width = 'inherit', filters }) => {
   const isSelected = filters[type] ?? false;
   const dispatch = useDispatch();
 
-  const stateStyles = isSelected ? {} : {
-    color: 'grey',
-    border: '1px solid grey',
-  };
-
   const tagStyle = {
     boxSizing: 'border-box',
     fontSize: '12px',
@@ -32,8 +27,7 @@ const PokeTag = ({ type = 'grass', width = 'inherit', filters }) => {
     width,
     justifyContent: 'center',
 
-    ...getTagStyleMixin(type),
-    ...stateStyles,
+    ...getTagStyleMixin(type, isSelected),
   };
 
   return (

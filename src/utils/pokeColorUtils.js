@@ -7,7 +7,7 @@ const {
 const colorsMap = {
   bug: lime[7],
   dragon: [blue[3], volcano[5]],
-  fairy: magenta[3],
+  fairy: magenta[4],
   fire: orange[6],
   ghost: purple[6],
   ground: [yellow[4], yellow[8]],
@@ -19,14 +19,14 @@ const colorsMap = {
   electric: yellow[5],
   fighting: orange[7],
   flying: [blue[2], gray[1]],
-  grass: green[3],
-  ice: geekblue[2],
+  grass: green[4],
+  ice: geekblue[3],
   poison: purple[3],
   rock: gold[8],
   water: blue[4],
 };
 
-const getTagStyleMixin = (type) => {
+const getTagStyleMixin = (type, isSelected) => {
   const pokeColor = colorsMap[type];
 
   if (typeof pokeColor === 'string') {
@@ -35,16 +35,16 @@ const getTagStyleMixin = (type) => {
     return {
       color,
       border: `1px solid ${color}`,
-      background: `${color}15`,
+      background: isSelected ? `${color}15` : 'white',
     };
   }
 
   const [color1, color2] = pokeColor;
 
   return {
-    color: 'white',
+    color: isSelected ? 'black' : color2,
     border: `1px solid ${color2}`,
-    background: `linear-gradient(180deg, ${color1}88 50%, ${color2}88 50%)`,
+    background: isSelected ? `linear-gradient(180deg, ${color1}88 50%, ${color2}88 50%)` : 'white',
   };
 };
 
