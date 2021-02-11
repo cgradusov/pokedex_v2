@@ -21,6 +21,11 @@ const PokeCard = ({
 
   const tags = types.map((el) => (el.type.name));
 
+  const cardStyle = {
+    height: '100%',
+    margin: '15px 10px',
+  };
+
   const descriptionStyle = {
     position: 'absolute',
     bottom: '10px',
@@ -28,7 +33,7 @@ const PokeCard = ({
   };
 
   return (
-    <Card loading={loading} style={{ height: '100%' }}>
+    <Card loading={loading} style={cardStyle}>
       <Meta
         avatar={
           <Avatar src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${formatNumber(num)}.png`} />

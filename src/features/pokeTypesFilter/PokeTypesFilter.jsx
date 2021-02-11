@@ -2,11 +2,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, connect } from 'react-redux';
 import Row from 'antd/lib/row';
+import Col from 'antd/lib/col';
 import PokeTag from '../../components/PokeTag';
 import {
   fetchPokemonsTypes, fetchPokemonsLinksByTypes, compilePokemonsLinks, updateFilters,
 } from './pokeTypesFilterSlice';
-import { makeChunks } from '../../utils/arrayUtils';
+
+const responsiveColProps = {
+  xs: { span: 4 },
+  sm: { span: 4 },
+  md: { span: 4 },
+  lg: { span: 4 },
+  xl: { span: 1 },
+  xxl: { span: 1 },
+};
 
 const PokeTypesFilter = ({ types, query, pokemons }) => {
   const dispatch = useDispatch();
@@ -27,17 +36,15 @@ const PokeTypesFilter = ({ types, query, pokemons }) => {
     dispatch(compilePokemonsLinks());
   }, [dispatch, pokemons]);
 
-  const chunksPokeTypes = makeChunks(types, 9);
-
   return (
-    <>
-      {chunksPokeTypes.map((t, i) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <Row key={i} style={{ marginBottom: i === 0 ? '10px' : 0 }}>
-          {t.map((el) => (<PokeTag key={el} type={el} width="60px" />))}
-        </Row>
+    <Row justify="space-between" gutter={[0, 10]}>
+      {types.map((el) => (
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        <Col key={el} {...responsiveColProps}>
+          <PokeTag key={el} type={el} width="60px" />
+        </Col>
       ))}
-    </>
+    </Row>
   );
 };
 

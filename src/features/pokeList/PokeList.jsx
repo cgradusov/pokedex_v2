@@ -6,7 +6,6 @@ import Col from 'antd/lib/col';
 import { fetchPokemons } from './pokeListSlice';
 import PokeCard from '../../components/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
-import { makeChunks } from '../../utils/arrayUtils';
 
 const containerStyle = {
   minHeight: 'calc(100% - 70px - 41px - 41px)',
@@ -14,6 +13,15 @@ const containerStyle = {
   flexDirection: 'column',
   rowGap: '16px',
   marginTop: '16px',
+};
+
+const responsiveColProps = {
+  xs: { span: 24 },
+  sm: { span: 12 },
+  md: { span: 8 },
+  lg: { span: 6 },
+  xl: { span: 6 },
+  xxl: { span: 4 },
 };
 
 const PokeList = ({
@@ -34,34 +42,33 @@ const PokeList = ({
     }
   }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, search, filters]);
 
-  const chunksPokeList = makeChunks(pokeList, 3);
-
   return (
     <div style={containerStyle}>
-      { chunksPokeList.length !== 0
+      { pokeList.length !== 0
         ? (
           <>
-            {chunksPokeList.map((chunk, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Row key={i}>
-                {
-                  chunk.map((el, j) => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <Col key={j} span={6} offset={j % 3 === 0 ? 2 : 1} flex>
-                      <PokeCard
-                        key={el.id}
-                        num={`${el.id}`}
-                        name={el.name}
-                        specs={el.specs}
-                        types={el.types}
-                        loading={loading}
-                      />
-                    </Col>
-                  ))
-                  }
-              </Row>
-            ))}
-            <PokePagination match={match} search={search} />
+            <Row gutter={[0, 16]}>
+              {pokeList.map((el, j) => (
+                <Col
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={j}
+                  // eslint-disable-next-line react/jsx-props-no-spreading
+                  {...responsiveColProps}
+                >
+                  <PokeCard
+                    key={el.id}
+                    num={`${el.id}`}
+                    name={el.name}
+                    specs={el.specs}
+                    types={el.types}
+                    loading={loading}
+                  />
+                </Col>
+              ))}
+            </Row>
+            <Row justify="center">
+              <PokePagination match={match} search={search} />
+            </Row>
           </>
         ) : (
           <Row gutter={[0, 16]} justify="center">
