@@ -2,7 +2,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  pokemonsPerPage: 18,
+  pokemonsPerPage: 24,
 };
 
 const pagination = createSlice({
