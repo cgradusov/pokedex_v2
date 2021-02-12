@@ -7,7 +7,9 @@ import { capitalizeString } from '../utils/stringUtils';
 import getTagStyleMixin from '../utils/pokeColorUtils';
 import { toggleFilter } from '../features/pokeTypesFilter/pokeTypesFilterSlice';
 
-const PokeTag = ({ type = 'grass', width = 'inherit', filters }) => {
+const PokeTag = ({
+  type = 'grass', width = 'inherit', clickable = true, filters,
+}) => {
   const isSelected = filters[type] ?? false;
   const dispatch = useDispatch();
 
@@ -22,16 +24,22 @@ const PokeTag = ({ type = 'grass', width = 'inherit', filters }) => {
     whiteSpace: 'nowrap',
     margin: '0 8px 0 0',
     padding: '0 7px',
-    cursor: 'pointer',
+    cursor: clickable ? 'pointer' : 'auto',
     userSelect: 'none',
     width,
     justifyContent: 'center',
 
-    ...getTagStyleMixin(type, isSelected),
+    ...getTagStyleMixin(type, isSelected || !clickable),
+  };
+
+  const onClick = () => {
+    if (clickable) {
+      dispatch(toggleFilter(type));
+    }
   };
 
   return (
-    <span onClick={() => dispatch(toggleFilter(type))} style={tagStyle}>
+    <span onClick={onClick} style={tagStyle}>
       {capitalizeString(type)}
     </span>
   );
