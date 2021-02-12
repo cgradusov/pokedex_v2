@@ -20,12 +20,14 @@ const calculateWeaknesses = (types) => {
   const immunes = combinedTypesData.no_damage_from;
   const half = combinedTypesData.half_damage_from;
 
-  return weaknesses.filter(
+  const weaknessesList = weaknesses.filter(
     (w) => !types.includes(w)
       && !strengths.includes(w)
       && !immunes.includes(w)
       && !half.includes(w),
   );
+
+  return [...new Set(weaknessesList)];
 };
 
 export default calculateWeaknesses;
