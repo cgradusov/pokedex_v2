@@ -107,6 +107,7 @@ const PokePage = ({
                         <PokeGender rate={genderRate} />
                       </span>
                     </div>
+                    <p />
                     <span>
                       For some time after its birth, it grows by gaining
                       nourishment from the seed on its back.
