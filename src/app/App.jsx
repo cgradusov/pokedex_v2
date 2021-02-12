@@ -9,6 +9,7 @@ import PokeHeader from '../features/pokeHeader/PokeHeader';
 import PokeList from '../features/pokeList/PokeList';
 import 'antd/dist/antd.css';
 import { history } from './store';
+import PokePage from '../features/pokePage/PokePage';
 
 const { Footer } = Layout;
 
@@ -19,6 +20,7 @@ const App = () => (
         <Redirect to="/1" />
       </Route>
       <Route
+        exact
         path="/:num"
         component={(props) => (
           <>
@@ -28,6 +30,7 @@ const App = () => (
           </>
         )}
       />
+      <Route path="/pokemon/:name" component={PokePage} />
     </Switch>
     <Footer style={{ textAlign: 'center' }}>
       Pokedex App ©2021 Created by

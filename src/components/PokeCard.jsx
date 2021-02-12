@@ -2,6 +2,9 @@
 import React from 'react';
 import Card from 'antd/lib/card';
 import Avatar from 'antd/lib/avatar';
+import { useDispatch } from 'react-redux';
+import { push } from 'connected-react-router';
+import { useLocation } from 'react-router-dom';
 import PokeTag from './PokeTag';
 import { capitalizeString, formatNumber } from '../utils/stringUtils';
 
@@ -32,13 +35,32 @@ const PokeCard = ({
     right: '10px',
   };
 
+  const location = useLocation();
+  const dispatch = useDispatch();
+
+  const onClick = () => {
+    dispatch(push({
+      pathname: `/pokemon/${name}`,
+      state: {
+        from: location.pathname,
+      },
+    }));
+  };
+
+  const metaStyles = {
+    cursor: 'pointer',
+    userSelect: 'none',
+  };
+
   return (
     <Card loading={loading} style={cardStyle}>
       <Meta
+        style={metaStyles}
         avatar={
           <Avatar src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${formatNumber(num)}.png`} />
                 }
         title={`${capitalizeString(name)} #${formatNumber(num)}`}
+        onClick={onClick}
         description={(
           <>
             {/* eslint-disable-next-line camelcase */}
