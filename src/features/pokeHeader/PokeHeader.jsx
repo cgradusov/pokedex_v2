@@ -56,9 +56,10 @@ const gutterY = {
 };
 
 const PokeHeader = ({
-  query, search, searchIsValid, filters,
+  location, search, searchIsValid, filters,
 }) => {
   const dispatch = useDispatch();
+  const { query } = location;
 
   const onClick = (value) => {
     const newSearch = value ?? search;
@@ -80,7 +81,12 @@ const PokeHeader = ({
         queryParams.set('filters', selectedTypes.join('-'));
       }
 
-      dispatch(push(`/1?${queryParams}`));
+      dispatch(push({
+        pathname: `/1?${queryParams}`,
+        state: {
+          from: location.pathname,
+        },
+      }));
     }
   };
 
@@ -105,7 +111,7 @@ const PokeHeader = ({
 };
 
 const mapState = (state) => ({
-  query: state.router.location.query,
+  location: state.router.location,
   search: state.pokeSearch.search,
   searchIsValid: state.pokeSearch.isValid,
   filters: state.pokeFilter.filters,
