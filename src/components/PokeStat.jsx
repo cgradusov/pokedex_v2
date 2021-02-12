@@ -10,20 +10,30 @@ const {
 const statColor = {
   hp: red[5],
   attack: orange[5],
-  defence: blue[5],
+  defense: blue[5],
   'special-attack': volcano[5],
-  'special-defence': cyan[5],
+  'special-defense': cyan[5],
   speed: lime[5],
 };
 
-const PokeStat = ({
-  short, name, param, value,
-}) => (
-  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
-    <span style={{ width: '20px' }} title={name}>{short}</span>
-    <Progress steps={15} percent={value / 2.25} strokeColor={statColor[param]} showInfo={false} style={{ margin: '0 10px' }} />
-    <span style={{ width: '20px' }}>{value}</span>
-  </div>
-);
+const nameShortByParam = {
+  hp: ['HP', 'HP'],
+  attack: ['Attack', 'AP'],
+  defense: ['Defence', 'DF'],
+  'special-attack': ['Special Attack', 'SA'],
+  'special-defense': ['Special Defence', 'SD'],
+  speed: ['Speed', 'SP'],
+};
+
+const PokeStat = ({ param, value }) => {
+  const [name, short] = nameShortByParam[param];
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
+      <span style={{ width: '20px' }} title={name}>{short}</span>
+      <Progress steps={15} percent={value / 2.25} strokeColor={statColor[param]} showInfo={false} style={{ margin: '0 10px' }} />
+      <span style={{ width: '20px' }}>{value}</span>
+    </div>
+  );
+};
 
 export default PokeStat;
