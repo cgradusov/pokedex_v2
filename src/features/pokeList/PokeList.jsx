@@ -67,7 +67,9 @@ const PokeList = ({
               ))}
             </Row>
             <Row justify="center">
-              <PokePagination match={match} search={search} />
+              <Col>
+                <PokePagination match={match} search={search} />
+              </Col>
             </Row>
           </>
         ) : (
