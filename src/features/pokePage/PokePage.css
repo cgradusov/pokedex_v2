@@ -1,0 +1,17 @@
+.stats {
+    margin-top: 0;
+}
+
+.back-button {
+    height: 32px;
+    width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+    .stats {
+        margin-top: 50px;
+    }
+    .back-button {
+        height: 48px;
+    }
+}
