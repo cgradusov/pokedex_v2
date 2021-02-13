@@ -30,7 +30,7 @@ const PokeStat = ({ param, value }) => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
       <span style={{ width: '20px' }} title={name}>{short}</span>
-      <Progress steps={15} percent={value / 2.25} strokeColor={statColor[param]} showInfo={false} style={{ margin: '0 10px' }} />
+      <Progress steps={13} percent={value / 2.25} strokeColor={statColor[param]} showInfo={false} style={{ margin: '0 10px' }} />
       <span style={{ width: '20px' }}>{value}</span>
     </div>
   );

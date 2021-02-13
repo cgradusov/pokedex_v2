@@ -34,25 +34,27 @@ const cardStyle = {
 };
 
 const headingColProps = {
-  xs: { span: 16, offset: 6, order: 0 },
+  xs: { span: 16, offset: 2, order: 0 },
   sm: { span: 16, offset: 7 },
   md: { span: 15, offset: 9, order: 0 },
-  lg: { span: 15, offset: 9, order: 0 },
+  lg: { span: 14, offset: 10, order: 0 },
   xl: { span: 24, offset: 0, push: 1 },
   xxl: {},
 };
 
 const imgColProps = {
-  xs: { span: 23, offset: 1, order: 1 },
+  xs: {
+    span: 22, offset: 0, order: 1, pull: 2,
+  },
   sm: { span: 20, offset: 4 },
-  md: { span: 18, offset: 6, order: 0 },
+  md: { span: 16, offset: 8, order: 0 },
   lg: { span: 10, offset: 1, order: 0 },
-  xl: { span: 14, offset: 0 },
+  xl: { span: 12, offset: 2 },
   xxl: {},
 };
 
 const statsColProps = {
-  xs: { span: 22, offset: 2, order: 3 },
+  xs: { span: 24, offset: 0, order: 3 },
   sm: { span: 19, offset: 5 },
   md: { span: 12, offset: 0, order: 3 },
   lg: {
@@ -63,7 +65,7 @@ const statsColProps = {
 };
 
 const typesColProps = {
-  xs: { span: 10, offset: 3, order: 4 },
+  xs: { span: 10, offset: 1, order: 4 },
   sm: { span: 10, offset: 4 },
   md: { span: 12, offset: 0, order: 5 },
   lg: {
@@ -74,7 +76,7 @@ const typesColProps = {
 };
 
 const weaknessColProps = {
-  xs: { span: 10, order: 4 },
+  xs: { span: 10, offset: 3, order: 4 },
   sm: { span: 10 },
   md: { span: 10, offset: 2, order: 5 },
   lg: {
@@ -85,7 +87,7 @@ const weaknessColProps = {
 };
 
 const descriptionColProps = {
-  xs: { span: 22, offset: 2, order: 2 },
+  xs: { span: 24, offset: 0, order: 2 },
   sm: { span: 20, offset: 2 },
   md: { span: 10, offset: 2, order: 4 },
   lg: { span: 12, offset: 0, order: 5 },
@@ -139,7 +141,7 @@ const PokePage = ({
                   </Col>
                   <Col {...imgColProps}>
                     <img
-                      style={{ width: '350px' }}
+                      className="avatar"
                       src={`https://assets.pokemon.com/assets/cms2/img/pokedex/full/${formatNumber(num)}.png`}
                       alt=""
                     />
@@ -151,31 +153,38 @@ const PokePage = ({
                   </Col>
                   <Col {...typesColProps}>
                     <h3>Types:</h3>
-                    {types.map((type) => (
-                      <PokeTag type={type} key={type} clickable={false} />
-                    ))}
+                    <Row gutter={[0, 5]}>
+                      {types.map((type) => (
+                        <Col>
+                          <PokeTag type={type} key={type} clickable={false} />
+                        </Col>
+                      ))}
+                    </Row>
                   </Col>
                   <Col {...weaknessColProps}>
                     <h3>Weakness:</h3>
-                    {weakness.map((type) => (
-                      <PokeTag type={type} key={type} clickable={false} />
-                    ))}
+                    <Row gutter={[0, 5]}>
+                      {weakness.map((type) => (
+                        <Col>
+                          <PokeTag type={type} key={type} clickable={false} />
+                        </Col>
+                      ))}
+                    </Row>
                   </Col>
                   <Col {...descriptionColProps} style={{ maxWidth: '350px' }}>
-                    <div style={{ display: 'flex', gap: '12px' }}>
-                      <span>{`Height: ${height / 10} m`}</span>
-                      <span>{`Weight: ${weight} kg`}</span>
+                    <div className="specs">
+                      <span>{`Height:${height / 10}m`}</span>
+                      <span>{`Weight:${weight}kg`}</span>
                       <span>
                         Gender:
-                        {' '}
                         <PokeGender rate={genderRate} />
                       </span>
                     </div>
                     <p />
-                    <span>
+                    <div className="description">
                       For some time after its birth, it grows by gaining
                       nourishment from the seed on its back.
-                    </span>
+                    </div>
                   </Col>
                 </Row>
               </Skeleton>

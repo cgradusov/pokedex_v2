@@ -7,11 +7,39 @@
     width: 100%;
 }
 
+.avatar {
+    width: 270px;
+}
+
+.description {
+    margin-left: 15px;
+}
+
+.specs {
+    display: flex;
+    gap: 9px;
+    justify-content: center;
+}
+
 @media screen and (min-width: 992px) {
     .stats {
         margin-top: 50px;
     }
     .back-button {
         height: 48px;
+    }
+    .avatar {
+        width: 350px;
+    }
+    .specs {
+        display: flex;
+        gap: 9px;
+        justify-content: flex-start;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .description {
+        margin-left: 0;
     }
 }
