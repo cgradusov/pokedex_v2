@@ -66,7 +66,7 @@ const PokeList = ({
                 </Col>
               ))}
             </Row>
-            <Row justify="center">
+            <Row justify="center" style={{ marginTop: '10px' }}>
               <Col>
                 <PokePagination match={match} search={search} />
               </Col>
