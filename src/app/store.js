@@ -3,7 +3,7 @@ import { createBrowserHistory } from 'history';
 import { routerMiddleware } from 'connected-react-router';
 import createRootReducer from './rootReducer';
 
-export const history = createBrowserHistory();
+export const history = createBrowserHistory({ basename: '/pokedex' });
 
 const store = configureStore({
   reducer: createRootReducer(history),

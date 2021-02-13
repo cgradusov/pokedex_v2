@@ -82,7 +82,8 @@ const PokeHeader = ({
       }
 
       dispatch(push({
-        pathname: `/1?${queryParams}`,
+        pathname: '/1',
+        search: `${queryParams}`,
         state: {
           from: location.pathname,
         },
