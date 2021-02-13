@@ -3,6 +3,7 @@
 import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
+import { Link } from 'react-router-dom';
 import Divider from 'antd/lib/divider';
 import { useDispatch, connect } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -94,8 +95,11 @@ const PokeHeader = ({
   return (
     <div style={{ margin: '10px 15px' }}>
       <Row justify="space-between" align="top" gutter={[0, gutterY]}>
-        {/* justify="space-around" align="center" style={{ margin: '15px 25px' }} */}
-        <Col {...headingColProps}><h1>Pokedex</h1></Col>
+        <Col {...headingColProps}>
+          <Link to="/">
+            <h1>Pokedex</h1>
+          </Link>
+        </Col>
         <Col {...filterColProps}>
           <PokeTypesFilter />
         </Col>
