@@ -126,7 +126,7 @@ const PokePage = ({
                   <Col {...descriptionColProps} style={{ maxWidth: '350px' }}>
                     <div className="specs">
                       <span>{`Height: ${height / 10}m`}</span>
-                      <span>{`Weight: ${weight}kg`}</span>
+                      <span>{`Weight: ${weight / 10}kg`}</span>
                       <span>
                         Gender:
                         {' '}
