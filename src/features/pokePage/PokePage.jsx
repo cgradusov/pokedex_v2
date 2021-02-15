@@ -34,70 +34,42 @@ const cardStyle = {
 };
 
 const headingColProps = {
-  xs: { span: 16, offset: 2, order: 0 },
-  sm: { span: 16, offset: 7 },
-  md: { span: 15, offset: 9, order: 0 },
-  lg: { span: 14, offset: 10, order: 0 },
-  xl: { span: 24, offset: 0, push: 1 },
-  xxl: {},
+  xs: { span: 24, order: 0 },
+  lg: { span: 24, pull: 8 },
 };
 
 const imgColProps = {
-  xs: {
-    span: 22, offset: 0, order: 1, pull: 2,
-  },
-  sm: { span: 20, offset: 4 },
-  md: { span: 16, offset: 8, order: 0 },
-  lg: { span: 10, offset: 1, order: 0 },
-  xl: { span: 12, offset: 2 },
-  xxl: {},
+  xs: { span: 24, order: 1 },
+  lg: { span: 12 },
 };
 
 const statsColProps = {
-  xs: { span: 24, offset: 0, order: 3 },
-  sm: { span: 19, offset: 5 },
+  xs: { order: 4 },
   md: { span: 12, offset: 0, order: 3 },
-  lg: {
-    span: 10, offset: 0, order: 2, push: 2,
-  },
-  xl: {},
-  xxl: {},
+  lg: { span: 10, offset: 2 },
 };
 
 const typesColProps = {
-  xs: { span: 10, offset: 1, order: 4 },
-  sm: { span: 10, offset: 4 },
-  md: { span: 12, offset: 0, order: 5 },
-  lg: {
-    span: 5, offset: 1, order: 6, push: 2,
-  },
-  xl: { span: 3, offset: 5, push: 3 },
-  xxl: {},
+  xs: { span: 24, order: 5 },
+  md: { span: 23, offset: 1 },
+  lg: { span: 11, offset: 1, order: 5 },
+  xl: { span: 10, offset: 2 },
 };
 
-const weaknessColProps = {
-  xs: { span: 10, offset: 3, order: 4 },
-  sm: { span: 10 },
-  md: { span: 10, offset: 2, order: 5 },
-  lg: {
-    span: 5, offset: 0, order: 6, push: 1,
-  },
-  xl: { push: 3 },
-  xxl: {},
-};
+// const weaknessColProps = {
+//   xs: { span: 12, order: 5 },
+//   lg: { span: 12, order: 6 },
+// };
 
 const descriptionColProps = {
-  xs: { span: 24, offset: 0, order: 2 },
-  sm: { span: 20, offset: 2 },
-  md: { span: 10, offset: 2, order: 4 },
-  lg: { span: 12, offset: 0, order: 5 },
-  xl: { span: 12, pull: 1 },
-  xxl: {},
+  xs: { order: 3 },
+  md: { span: 11, offset: 1, order: 3 },
+  lg: { span: 12, order: 4 },
 };
 
 const gutterY = {
   xs: 10,
-  sm: 10,
+  md: 12,
 };
 
 const PokePage = ({
@@ -135,9 +107,9 @@ const PokePage = ({
           error === null
             ? (
               <Skeleton loading={loading} active>
-                <Row justify="center" align="stretch" gutter={[0, gutterY]}>
+                <Row justify="center" gutter={[0, gutterY]}>
                   <Col {...headingColProps}>
-                    <h1>{`${capitalizeString(name)} #${formatNumber(num)}`}</h1>
+                    <h1 style={{ textAlign: 'center' }}>{`${capitalizeString(name)} #${formatNumber(num)}`}</h1>
                   </Col>
                   <Col {...imgColProps}>
                     <img
@@ -146,37 +118,18 @@ const PokePage = ({
                       alt=""
                     />
                   </Col>
-                  <Col {...statsColProps} className="stats">
+                  <Col {...statsColProps} className="stats" flex="200px">
                     {stats.map((s) => (
                       <PokeStat param={s.stat.name} key={s.stat.name} value={s.base_stat} />
                     ))}
                   </Col>
-                  <Col {...typesColProps}>
-                    <h3>Types:</h3>
-                    <Row gutter={[0, 5]}>
-                      {types.map((type) => (
-                        <Col>
-                          <PokeTag type={type} key={type} clickable={false} />
-                        </Col>
-                      ))}
-                    </Row>
-                  </Col>
-                  <Col {...weaknessColProps}>
-                    <h3>Weakness:</h3>
-                    <Row gutter={[0, 5]}>
-                      {weakness.map((type) => (
-                        <Col>
-                          <PokeTag type={type} key={type} clickable={false} />
-                        </Col>
-                      ))}
-                    </Row>
-                  </Col>
                   <Col {...descriptionColProps} style={{ maxWidth: '350px' }}>
                     <div className="specs">
-                      <span>{`Height:${height / 10}m`}</span>
-                      <span>{`Weight:${weight}kg`}</span>
+                      <span>{`Height: ${height / 10}m`}</span>
+                      <span>{`Weight: ${weight}kg`}</span>
                       <span>
                         Gender:
+                        {' '}
                         <PokeGender rate={genderRate} />
                       </span>
                     </div>
@@ -185,6 +138,30 @@ const PokePage = ({
                       For some time after its birth, it grows by gaining
                       nourishment from the seed on its back.
                     </div>
+                  </Col>
+                  <Col {...typesColProps}>
+                    <Row justify="space-between">
+                      <Col span={12}>
+                        <h3>Types:</h3>
+                        <Row gutter={[0, 5]}>
+                          {types.map((type) => (
+                            <Col>
+                              <PokeTag type={type} key={type} clickable={false} />
+                            </Col>
+                          ))}
+                        </Row>
+                      </Col>
+                      <Col span={12}>
+                        <h3>Weaknesses:</h3>
+                        <Row gutter={[0, 5]}>
+                          {weakness.map((type) => (
+                            <Col>
+                              <PokeTag type={type} key={type} clickable={false} />
+                            </Col>
+                          ))}
+                        </Row>
+                      </Col>
+                    </Row>
                   </Col>
                 </Row>
               </Skeleton>
