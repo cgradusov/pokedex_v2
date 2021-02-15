@@ -28,6 +28,7 @@ const PokeCard = ({
     margin: '15px 10px',
     padding: loading ? '24px' : '0',
     border: '1px solid #f0f0f0',
+    borderRadius: '9px',
   };
 
   const descriptionStyle = {
