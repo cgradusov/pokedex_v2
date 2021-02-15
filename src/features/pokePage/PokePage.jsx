@@ -79,13 +79,6 @@ const PokePage = ({
   useEffect(() => {
     dispatch(fetchPokemon(name));
   }, [dispatch, name]);
-  const canGoBack = typeof history.location.state !== 'undefined';
-
-  const onCLick = () => {
-    if (canGoBack) {
-      history.goBack();
-    }
-  };
 
   const num = id.toString();
   const types = typesData.map((el) => (el.type.name));
@@ -94,7 +87,7 @@ const PokePage = ({
 
   return (
     <div style={containerStyle}>
-      <Button onClick={onCLick} disabled={!canGoBack} className="back-button">
+      <Button onClick={() => history.goBack()} className="back-button">
         <LeftOutlined />
       </Button>
       <div style={cardStyle}>
