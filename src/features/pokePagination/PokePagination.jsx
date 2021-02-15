@@ -10,6 +10,7 @@ import LeftOutlined from '@ant-design/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/RightOutlined';
 import DoubleLeftOutlined from '@ant-design/icons/DoubleLeftOutlined';
 import DoubleRightOutlined from '@ant-design/icons/DoubleRightOutlined';
+import './PokePagination.css';
 
 // eslint-disable-next-line no-unused-vars
 const getCustomLink = (query) => (pagenumber, type, originalElement) => {
