@@ -18,8 +18,8 @@
 
 .specs {
     display: flex;
-    gap: 9px;
-    justify-content: center;
+    margin-left: 5px;
+    justify-content: space-between;
     font-size: 0.80rem;
 }
 
@@ -27,8 +27,9 @@
     .description {
         margin-left: 0;
     }
+
     .specs {
-        justify-content: space-between;
+        margin-left: 0;
     }
 }
 
@@ -44,7 +45,9 @@
     }
     .specs {
         display: flex;
-        gap: 30px;
         justify-content: flex-start;
+    }
+    .specs > * {
+        margin-right: 15px;
     }
 }

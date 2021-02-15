@@ -56,13 +56,8 @@ const typesColProps = {
   xl: { span: 10, offset: 2 },
 };
 
-// const weaknessColProps = {
-//   xs: { span: 12, order: 5 },
-//   lg: { span: 12, order: 6 },
-// };
-
 const descriptionColProps = {
-  xs: { order: 3 },
+  xs: { span: 24, order: 3 },
   md: { span: 11, offset: 1, order: 3 },
   lg: { span: 12, order: 4 },
 };
