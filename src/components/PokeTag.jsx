@@ -15,7 +15,8 @@ const PokeTag = ({
 
   const tagStyle = {
     boxSizing: 'border-box',
-    fontSize: '12px',
+    fontSize: '14px',
+    borderRadius: '20%',
     lineHeight: '20px',
     fontVariant: 'tabular-nums',
     fontFeatureSettings: 'tnum',
@@ -23,7 +24,7 @@ const PokeTag = ({
     height: 'auto',
     whiteSpace: 'nowrap',
     margin: '0 8px 0 0',
-    padding: '0 7px',
+    padding: '2px 10px',
     cursor: clickable ? 'pointer' : 'auto',
     userSelect: 'none',
     width,
