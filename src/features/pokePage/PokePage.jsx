@@ -2,19 +2,18 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import Button from 'antd/lib/button';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Skeleton from 'antd/lib/skeleton';
 import LeftOutlined from '@ant-design/icons/LeftOutlined';
-import { useDispatch, connect } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
 import PokeStat from '../../components/PokeStat';
 import PokeTag from '../../components/PokeTag';
 import PokeGender from '../../components/PokeGender';
 import { capitalizeString, formatNumber } from '../../utils/stringUtils';
 import calculateWeaknesses from '../../utils/pokeWeaknessCalc';
-import { fetchPokemon } from './pokePageSlice';
 import './PokePage.css';
 
 const containerStyle = {
@@ -68,17 +67,16 @@ const gutterY = {
 };
 
 const PokePage = ({
-  match, history, loading, data, error,
+  loading, pokemons, globalError,
 }) => {
+  const params = useParams();
+  const { name } = params;
+  const history = useHistory();
+  const pokemon = pokemons[name];
+  const error = typeof pokemon !== 'undefined' ? null : 'Pokemon Not Found';
   const {
-    id, height, weight, types, stats, gender,
-  } = data;
-
-  const { name } = match.params;
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchPokemon(name));
-  }, [dispatch, name]);
+    id = 0, height = 0, weight = 0, types = [], stats = [], gender = 0,
+  } = pokemon ?? {};
 
   const num = id.toString();
   const weakness = calculateWeaknesses(types).sort();
@@ -90,7 +88,7 @@ const PokePage = ({
       </Button>
       <div style={cardStyle}>
         {
-          error === null
+          globalError === null && error === null
             ? (
               <Skeleton loading={loading} active>
                 <Row justify="center" gutter={[0, gutterY]}>
@@ -163,10 +161,4 @@ const PokePage = ({
   );
 };
 
-const mapState = (state) => ({
-  loading: state.pokePage.loading,
-  error: state.pokePage.error,
-  data: state.pokePage.data,
-});
-
-export default connect(mapState, null)(PokePage);
+export default PokePage;

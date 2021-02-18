@@ -10,17 +10,8 @@ import PokeTag from './PokeTag';
 import { capitalizeString, formatNumber } from '../utils/stringUtils';
 
 const PokeCard = ({
-  loading = false, name, num, specs, types,
+  loading = false, name, num, desc, types,
 }) => {
-  // eslint-disable-next-line camelcase
-  const { flavor_text_entries } = specs;
-  const filteredFlavorTextEntries = flavor_text_entries.filter((el) => (
-    el.language.name === 'en' && ['sword', 'y', 'sun'].includes(el.version.name)
-  ));
-
-  // eslint-disable-next-line camelcase
-  const { flavor_text } = filteredFlavorTextEntries[0] ?? '';
-
   const cardStyle = {
     height: '100%',
     margin: '15px 10px',
@@ -74,8 +65,7 @@ const PokeCard = ({
         <p
           style={{ color: 'rgba(0, 0, 0, 0.45)', padding: '24px' }}
         >
-          {/* eslint-disable-next-line camelcase */}
-          {flavor_text}
+          {desc}
         </p>
         <p />
         <div style={descriptionStyle}>

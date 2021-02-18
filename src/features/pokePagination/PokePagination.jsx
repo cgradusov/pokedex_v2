@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { connect } from 'react-redux';
+import { useParams, Link } from 'react-router-dom';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Pagination from 'antd/lib/pagination';
 import Button from 'antd/lib/button';
-import { Link } from 'react-router-dom';
 import LeftOutlined from '@ant-design/icons/LeftOutlined';
 import RightOutlined from '@ant-design/icons/RightOutlined';
 import DoubleLeftOutlined from '@ant-design/icons/DoubleLeftOutlined';
@@ -13,8 +12,7 @@ import DoubleRightOutlined from '@ant-design/icons/DoubleRightOutlined';
 import './PokePagination.css';
 
 // eslint-disable-next-line no-unused-vars
-const getCustomLink = (query) => (pagenumber, type, originalElement) => {
-  const searchParams = new URLSearchParams(query);
+const getCustomLink = (searchParams) => (pagenumber, type, originalElement) => {
   const uri = `${pagenumber}?${searchParams}`;
   const prefixCls = 'ant-pagination';
   const ellipsis = <span className={`${prefixCls}-item-ellipsis`}>•••</span>;
@@ -60,9 +58,10 @@ const getCustomLink = (query) => (pagenumber, type, originalElement) => {
 };
 
 const PokePagination = ({
-  match, count, pokemonsPerPage, query,
+  count, pokemonsPerPage, searchParams,
 }) => {
-  const { num } = match.params;
+  const params = useParams();
+  const { num } = params;
   const pageNumber = Number.parseInt(num, 10);
 
   return (
@@ -74,17 +73,11 @@ const PokePagination = ({
           onChange={() => window.scrollTo(0, 0)}
           defaultPageSize={pokemonsPerPage}
           showSizeChanger={false}
-          itemRender={getCustomLink(query)}
+          itemRender={getCustomLink(searchParams)}
         />
       </Col>
     </Row>
   );
 };
 
-const mapState = (state) => ({
-  count: state.pokeList.count,
-  pokemonsPerPage: state.pokePagination.pokemonsPerPage,
-  query: state.router.location.query,
-});
-
-export default connect(mapState, null)(PokePagination);
+export default PokePagination;

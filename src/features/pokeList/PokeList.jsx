@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
-import { useDispatch, connect } from 'react-redux';
+import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
-import { fetchPokemons } from './pokeListSlice';
+import { useParams, useLocation } from 'react-router-dom';
 import PokeCard from '../../components/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
+import { formatNumber } from '../../utils/stringUtils';
 
 const containerStyle = {
   minHeight: 'calc(100% - 70px - 41px - 41px)',
@@ -24,42 +24,55 @@ const responsiveColProps = {
   xxl: { span: 4 },
 };
 
+const pokeFilter = (filters) => ([, el]) => filters.split('-').every((t) => el.types.includes(t));
+
+const pokeSearch = (search) => {
+  if (!Number.isNaN(search) && !Number.isNaN(parseFloat(search))) {
+    return ([, el]) => formatNumber(el.id).includes(search);
+  }
+
+  return ([, el]) => el.name.includes(search);
+};
+
 const PokeList = ({
-  pokeLinks, pokeList, loading,
-  pokemonsPerPage, match, query,
+  pokemons, perPage, loading,
 }) => {
-  const { num } = match.params;
-  const pageNumber = Number.parseInt(num, 10);
-  const dispatch = useDispatch();
+  const params = useParams();
+  const pageNumber = Number.parseInt(params.num, 10);
+
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const query = Object.fromEntries(searchParams.entries());
+
   const search = (query.search ?? '').toLowerCase();
   const filters = (query.filters ?? '').toLowerCase();
 
-  useEffect(() => {
-    if (pokeLinks.length > 0) {
-      const limit = pokemonsPerPage * pageNumber;
-      const offset = pokemonsPerPage * (pageNumber - 1);
-      dispatch(fetchPokemons(pokeLinks, limit, offset, search, filters));
-    }
-  }, [pokeLinks, pageNumber, pokemonsPerPage, dispatch, search, filters]);
+  const pokeList = Object.entries(pokemons);
+  const searchedPokeList = search !== '' ? pokeList.filter(pokeSearch(search)) : pokeList;
+  const filteredPokeList = filters !== '' ? searchedPokeList.filter(pokeFilter(filters)) : searchedPokeList;
+
+  const pokeListPage = filteredPokeList.slice(
+    (pageNumber - 1) * perPage,
+    pageNumber * perPage,
+  );
 
   return (
     <div style={containerStyle}>
-      { pokeList.length !== 0
+      { pokeListPage.length !== 0
         ? (
           <>
             <Row gutter={[0, 16]}>
-              {pokeList.map((el, j) => (
+              {pokeListPage.map(([name, el]) => (
                 <Col
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={j}
+                  key={name}
                   // eslint-disable-next-line react/jsx-props-no-spreading
                   {...responsiveColProps}
                 >
                   <PokeCard
                     key={el.id}
                     num={`${el.id}`}
-                    name={el.name}
-                    specs={el.specs}
+                    name={name}
+                    desc={el.desc}
                     types={el.types}
                     loading={loading}
                   />
@@ -68,7 +81,11 @@ const PokeList = ({
             </Row>
             <Row justify="center" style={{ marginTop: '10px' }}>
               <Col>
-                <PokePagination match={match} search={search} />
+                <PokePagination
+                  searchParams={searchParams}
+                  count={filteredPokeList.length}
+                  pokemonsPerPage={perPage}
+                />
               </Col>
             </Row>
           </>
@@ -81,12 +98,4 @@ const PokeList = ({
   );
 };
 
-const mapState = (state) => ({
-  pokeLinks: state.pokeFilter.pokemonsLinks,
-  pokeList: state.pokeList.pokemonsList,
-  loading: state.pokeList.loading,
-  pokemonsPerPage: state.pokePagination.pokemonsPerPage,
-  query: state.router.location.query,
-});
-
-export default connect(mapState, null)(PokeList);
+export default PokeList;

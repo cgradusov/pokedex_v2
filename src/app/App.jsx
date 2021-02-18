@@ -16,7 +16,7 @@ import types from '../constants/pokeTypes';
 const { Footer } = Layout;
 
 const initialState = {
-  loading: true,
+  loading: false,
   error: null,
   count: 898,
   perPage: 24,
@@ -32,7 +32,7 @@ const initialState = {
 
 const App = () => {
   // eslint-disable-next-line no-unused-vars
-  const [state, setstate] = useState(initialState);
+  const [state, setState] = useState(initialState);
 
   return (
     <Router history={history}>
@@ -46,12 +46,17 @@ const App = () => {
           component={(props) => (
             <>
               <PokeHeader {...props} />
-              <PokeList {...props} />
-
+              <PokeList
+                pokemons={state.pokemons}
+                perPage={state.perPage}
+                loading={state.loading}
+              />
             </>
           )}
         />
-        <Route path="/pokemon/:name" component={PokePage} />
+        <Route path="/pokemon/:name">
+          <PokePage loading={state.loading} globalError={state.error} pokemons={state.pokemons} />
+        </Route>
       </Switch>
       <Footer style={{ textAlign: 'center' }}>
         Pokedex App ©2021 Created by
