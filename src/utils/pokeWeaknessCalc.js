@@ -2,6 +2,9 @@
 import pokeTypes from '../constants/pokeTypes';
 
 const calculateWeaknesses = (types) => {
+  if (types.length === 0) {
+    return [];
+  }
   const selectedTypesData = types.map((t) => pokeTypes[t]);
   const combinedTypesData = selectedTypesData.reduce((acc, el) => {
     const keys = Object.keys(el);
