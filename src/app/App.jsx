@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from 'antd/lib/layout';
 import {
   Redirect, Route, Switch,
@@ -10,34 +10,56 @@ import PokeList from '../features/pokeList/PokeList';
 import 'antd/dist/antd.css';
 import { history } from './store';
 import PokePage from '../features/pokePage/PokePage';
+import pokemons from '../constants/pokemonsList';
+import types from '../constants/pokeTypes';
 
 const { Footer } = Layout;
 
-const App = () => (
-  <Router history={history}>
-    <Switch>
-      <Route exact path="/">
-        <Redirect to="/1" />
-      </Route>
-      <Route
-        exact
-        path="/:num"
-        component={(props) => (
-          <>
-            <PokeHeader {...props} />
-            <PokeList {...props} />
+const initialState = {
+  loading: true,
+  error: null,
+  count: 898,
+  perPage: 24,
+  pokemons,
+  types,
+  filters: {},
+  search: {
+    value: '',
+    isValid: true,
+  },
 
-          </>
-        )}
-      />
-      <Route path="/pokemon/:name" component={PokePage} />
-    </Switch>
-    <Footer style={{ textAlign: 'center' }}>
-      Pokedex App ©2021 Created by
-      {' '}
-      <a href="https://github.com/cgradusov">Constantine Gradusov</a>
-    </Footer>
-  </Router>
-);
+};
+
+const App = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [state, setstate] = useState(initialState);
+
+  return (
+    <Router history={history}>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/1" />
+        </Route>
+        <Route
+          exact
+          path="/:num"
+          component={(props) => (
+            <>
+              <PokeHeader {...props} />
+              <PokeList {...props} />
+
+            </>
+          )}
+        />
+        <Route path="/pokemon/:name" component={PokePage} />
+      </Switch>
+      <Footer style={{ textAlign: 'center' }}>
+        Pokedex App ©2021 Created by
+        {' '}
+        <a href="https://github.com/cgradusov">Constantine Gradusov</a>
+      </Footer>
+    </Router>
+  );
+};
 
 export default App;
