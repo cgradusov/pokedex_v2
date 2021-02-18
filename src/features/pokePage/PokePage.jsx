@@ -71,7 +71,7 @@ const PokePage = ({
   match, history, loading, data, error,
 }) => {
   const {
-    id, height, weight, types: typesData, stats, specs,
+    id, height, weight, types, stats, gender,
   } = data;
 
   const { name } = match.params;
@@ -81,9 +81,7 @@ const PokePage = ({
   }, [dispatch, name]);
 
   const num = id.toString();
-  const types = typesData.map((el) => (el.type.name));
   const weakness = calculateWeaknesses(types).sort();
-  const { gender_rate: genderRate } = specs;
 
   return (
     <div style={containerStyle}>
@@ -108,7 +106,7 @@ const PokePage = ({
                   </Col>
                   <Col {...statsColProps} className="stats" flex="200px">
                     {stats.map((s) => (
-                      <PokeStat param={s.stat.name} key={s.stat.name} value={s.base_stat} />
+                      <PokeStat param={s.name} key={s.name} value={s.bs} />
                     ))}
                   </Col>
                   <Col {...descriptionColProps} style={{ maxWidth: '350px' }}>
@@ -118,7 +116,7 @@ const PokePage = ({
                       <span>
                         Gender:
                         {' '}
-                        <PokeGender rate={genderRate} />
+                        <PokeGender rate={gender} />
                       </span>
                     </div>
                     <p />
@@ -133,8 +131,8 @@ const PokePage = ({
                         <h3>Types:</h3>
                         <Row gutter={[0, 5]}>
                           {types.map((type) => (
-                            <Col>
-                              <PokeTag type={type} key={type} clickable={false} />
+                            <Col key={type}>
+                              <PokeTag type={type} clickable={false} />
                             </Col>
                           ))}
                         </Row>
@@ -143,8 +141,8 @@ const PokePage = ({
                         <h3>Weaknesses:</h3>
                         <Row gutter={[0, 5]}>
                           {weakness.map((type) => (
-                            <Col>
-                              <PokeTag type={type} key={type} clickable={false} />
+                            <Col key={type}>
+                              <PokeTag type={type} clickable={false} />
                             </Col>
                           ))}
                         </Row>

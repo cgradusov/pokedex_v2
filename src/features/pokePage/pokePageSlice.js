@@ -9,14 +9,10 @@ const initialState = {
     id: 1,
     height: 7,
     weight: 69,
-    types: [
-      { type: { name: 'grass' } },
-    ],
+    types: ['grass'],
     stats: [{
-      base_stat: 45,
-      stat: {
-        name: 'hp',
-      },
+      bs: 45,
+      name: 'hp',
     }],
     specs: {
       gender_rate: 0,

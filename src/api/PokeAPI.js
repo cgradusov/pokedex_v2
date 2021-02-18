@@ -1,4 +1,5 @@
 import axios from 'axios';
+import pokemons from '../constants/pokemonsList';
 
 const fetchPokeAPI = async (uri) => {
   const url = `https://pokeapi.co/api/v2/${uri}`;
@@ -11,7 +12,7 @@ export const getPokemonsLinks = async () => {
   return fetchPokeAPI(uri);
 };
 
-export const getPokemon = async (name) => fetchPokeAPI(`pokemon/${name}/`);
+export const getPokemon = async (name) => pokemons[name];
 
 export const getPokemonSpecs = async (name) => {
   const uri = `pokemon-species/${name}/`;

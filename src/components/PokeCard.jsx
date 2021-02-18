@@ -21,8 +21,6 @@ const PokeCard = ({
   // eslint-disable-next-line camelcase
   const { flavor_text } = filteredFlavorTextEntries[0] ?? '';
 
-  const tags = types.map((el) => (el.type.name));
-
   const cardStyle = {
     height: '100%',
     margin: '15px 10px',
@@ -81,7 +79,7 @@ const PokeCard = ({
         </p>
         <p />
         <div style={descriptionStyle}>
-          {tags.map((type) => (
+          {types.map((type) => (
             <PokeTag type={type} key={type} />
           ))}
         </div>
