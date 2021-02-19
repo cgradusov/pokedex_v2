@@ -3,9 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import Skeleton from 'antd/lib/skeleton';
-import { useDispatch } from 'react-redux';
-import { push } from 'connected-react-router';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import PokeTag from './PokeTag';
 import { capitalizeString, formatNumber } from '../utils/stringUtils';
 
@@ -28,15 +26,15 @@ const PokeCard = ({
   };
 
   const location = useLocation();
-  const dispatch = useDispatch();
+  const history = useHistory();
 
   const onClick = () => {
-    dispatch(push({
+    history.push({
       pathname: `/pokemon/${name}`,
       state: {
         from: location.pathname,
       },
-    }));
+    });
   };
 
   const imgUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${formatNumber(num)}.png`;
