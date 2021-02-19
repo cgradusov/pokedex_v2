@@ -4,8 +4,8 @@
 import React from 'react';
 import Skeleton from 'antd/lib/skeleton';
 import { useLocation, useHistory } from 'react-router-dom';
-import PokeTag from './PokeTag';
-import { capitalizeString, formatNumber } from '../utils/stringUtils';
+import PokeTag from '../../components/PokeTag';
+import { capitalizeString, formatNumber } from '../../utils/stringUtils';
 
 const PokeCard = ({
   loading = false, name, num, desc, types,

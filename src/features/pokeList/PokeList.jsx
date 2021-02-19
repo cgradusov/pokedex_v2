@@ -3,7 +3,7 @@ import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import { useParams, useLocation } from 'react-router-dom';
-import PokeCard from '../../components/PokeCard';
+import PokeCard from '../pokeCard/PokeCard';
 import PokePagination from '../pokePagination/PokePagination';
 import { formatNumber } from '../../utils/stringUtils';
 
