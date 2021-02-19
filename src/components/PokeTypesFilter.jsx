@@ -2,7 +2,7 @@
 import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
-import PokeTag from '../../components/PokeTag';
+import PokeTag from './PokeTag';
 
 const responsiveColProps = {
   xs: { span: 4 },

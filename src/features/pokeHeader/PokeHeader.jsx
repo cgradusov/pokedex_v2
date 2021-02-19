@@ -6,7 +6,7 @@ import Col from 'antd/lib/col';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import Divider from 'antd/lib/divider';
 import PokeSearch from '../pokeSearch/PokeSearch';
-import PokeTypesFilter from '../pokeTypesFilter/PokeTypesFilter';
+import PokeTypesFilter from '../../components/PokeTypesFilter';
 
 const headingColProps = {
   xs: { order: 1, span: 15, offset: 9 },
