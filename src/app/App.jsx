@@ -11,7 +11,7 @@ import 'antd/dist/antd.css';
 import { history } from './store';
 import PokePage from '../features/pokePage/PokePage';
 import pokemons from '../constants/pokemonsList';
-import types from '../constants/pokeTypes';
+import typesMap from '../constants/pokeTypes';
 
 const { Footer } = Layout;
 
@@ -21,18 +21,12 @@ const initialState = {
   count: 898,
   perPage: 24,
   pokemons,
-  types,
-  filters: {},
-  search: {
-    value: '',
-    isValid: true,
-  },
-
+  typesMap,
+  types: Object.keys(typesMap),
 };
 
 const App = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [state, setState] = useState(initialState);
+  const [state] = useState(initialState);
 
   return (
     <Router history={history}>
@@ -40,20 +34,14 @@ const App = () => {
         <Route exact path="/">
           <Redirect to="/1" />
         </Route>
-        <Route
-          exact
-          path="/:num"
-          component={(props) => (
-            <>
-              <PokeHeader {...props} />
-              <PokeList
-                pokemons={state.pokemons}
-                perPage={state.perPage}
-                loading={state.loading}
-              />
-            </>
-          )}
-        />
+        <Route exact path="/:num">
+          <PokeHeader types={state.types} />
+          <PokeList
+            pokemons={state.pokemons}
+            perPage={state.perPage}
+            loading={state.loading}
+          />
+        </Route>
         <Route path="/pokemon/:name">
           <PokePage loading={state.loading} globalError={state.error} pokemons={state.pokemons} />
         </Route>

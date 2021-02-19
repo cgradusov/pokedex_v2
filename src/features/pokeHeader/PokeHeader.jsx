@@ -1,15 +1,12 @@
 /* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import Divider from 'antd/lib/divider';
-import { useDispatch, connect } from 'react-redux';
-import { push } from 'connected-react-router';
 import PokeSearch from '../pokeSearch/PokeSearch';
 import PokeTypesFilter from '../pokeTypesFilter/PokeTypesFilter';
-import PokeSearchButton from '../../components/PokeSearchButton';
 
 const headingColProps = {
   xs: { order: 1, span: 15, offset: 9 },
@@ -32,19 +29,10 @@ const filterColProps = {
 const searchColProps = {
   xs: { order: 2, span: 24, offset: 0 },
   sm: { order: 2, span: 24, offset: 0 },
-  md: { order: 0, span: 18, offset: 0 },
-  lg: { order: 0, span: 7, offset: 15 },
-  xl: { order: 0, span: 22, offset: 0 },
-  xxl: { order: 0, span: 22, offset: 0 },
-};
-
-const searchButtonColProps = {
-  xs: { order: 4, span: 24, offset: 0 },
-  sm: { order: 4, span: 24, offset: 0 },
-  md: { order: 0, span: 6, offset: 0 },
-  lg: { order: 0, span: 2, offset: 0 },
-  xl: { order: 0, span: 2, offset: 0 },
-  xxl: { order: 0, span: 2, offset: 0 },
+  md: { order: 0, span: 24, offset: 0 },
+  lg: { order: 0, span: 24, offset: 15 },
+  xl: { order: 0, span: 24, offset: 0 },
+  xxl: { order: 0, span: 24, offset: 0 },
 };
 
 const gutterY = {
@@ -57,38 +45,72 @@ const gutterY = {
 };
 
 const PokeHeader = ({
-  location, search, searchIsValid, filters,
+  types,
 }) => {
-  const dispatch = useDispatch();
-  const { query } = location;
+  const history = useHistory();
+  const location = useLocation();
 
-  const onClick = (value) => {
-    const newSearch = value ?? search;
+  const searchParams = new URLSearchParams(location.search);
+  const query = Object.fromEntries(searchParams.entries());
 
-    if (searchIsValid) {
-      const queryParams = new URLSearchParams(query);
+  const searchValue = (query.search ?? '').toLowerCase();
+  const filtersValue = (query.filters ?? '').toLowerCase();
 
-      if (newSearch === '') {
+  const initialStateFilters = filtersValue
+    .split('-')
+    .reduce((acc, f) => {
+      if (f !== '') {
+        acc[f] = true;
+      }
+      return acc;
+    }, {});
+  const [filters, setFilters] = useState(initialStateFilters);
+
+  const [search, setSearch] = useState({
+    value: searchValue,
+    isValid: true,
+  });
+
+  const onClick = () => {
+    const queryParams = new URLSearchParams(query);
+
+    if (search.isValid) {
+      if (search.value === '') {
         queryParams.delete('search');
       } else {
-        queryParams.set('search', newSearch);
+        queryParams.set('search', search.value);
       }
+    }
 
-      const selectedTypes = Object.keys(filters);
+    const selectedTypes = Object
+      .entries(filters)
+      .reduce((acc, [k, v]) => (v ? [...acc, k] : acc), []);
 
-      if (selectedTypes.length === 0) {
-        queryParams.delete('filters');
-      } else {
-        queryParams.set('filters', selectedTypes.join('-'));
-      }
+    if (selectedTypes.length === 0) {
+      queryParams.delete('filters');
+    } else {
+      queryParams.set('filters', selectedTypes.join('-'));
+    }
 
-      dispatch(push({
-        pathname: '/1',
-        search: `${queryParams}`,
-        state: {
-          from: location.pathname,
-        },
-      }));
+    history.push({
+      pathname: '/1',
+      search: `${queryParams}`,
+      state: {
+        from: location.pathname,
+      },
+    });
+  };
+
+  useEffect(() => {
+    onClick();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filters, search]);
+
+  const toggleFilter = (type) => {
+    if (typeof filters[type] === 'undefined') {
+      setFilters({ ...filters, [type]: true });
+    } else {
+      setFilters({ ...filters, [type]: undefined });
     }
   };
 
@@ -101,13 +123,10 @@ const PokeHeader = ({
           </Link>
         </Col>
         <Col {...filterColProps}>
-          <PokeTypesFilter />
+          <PokeTypesFilter types={types} filters={filters} toggleFilter={toggleFilter} />
         </Col>
         <Col {...searchColProps} style={{ maxHeight: '56px', minWidth: '200px' }}>
-          <PokeSearch onClick={onClick} />
-        </Col>
-        <Col {...searchButtonColProps}>
-          <PokeSearchButton onClick={onClick} />
+          <PokeSearch onClick={onClick} search={search} setSearch={setSearch} />
         </Col>
       </Row>
       <Divider orientation="left" style={{ margin: '12px 0 24px 0' }} />
@@ -115,11 +134,4 @@ const PokeHeader = ({
   );
 };
 
-const mapState = (state) => ({
-  location: state.router.location,
-  search: state.pokeSearch.search,
-  searchIsValid: state.pokeSearch.isValid,
-  filters: state.pokeFilter.filters,
-});
-
-export default connect(mapState, null)(PokeHeader);
+export default PokeHeader;

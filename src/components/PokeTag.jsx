@@ -2,16 +2,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { useDispatch, connect } from 'react-redux';
 import { capitalizeString } from '../utils/stringUtils';
 import getTagStyleMixin from '../utils/pokeColorUtils';
-import { toggleFilter } from '../features/pokeTypesFilter/pokeTypesFilterSlice';
 
 const PokeTag = ({
-  type = 'grass', width = 'inherit', clickable = true, filters,
+  type = 'grass', width = 'inherit', clickable = true, filters = {}, toggleFilter,
 }) => {
   const isSelected = filters[type] ?? false;
-  const dispatch = useDispatch();
 
   const tagStyle = {
     boxSizing: 'border-box',
@@ -35,7 +32,7 @@ const PokeTag = ({
 
   const onClick = () => {
     if (clickable) {
-      dispatch(toggleFilter(type));
+      toggleFilter(type);
     }
   };
 
@@ -46,8 +43,4 @@ const PokeTag = ({
   );
 };
 
-const mapState = (state) => ({
-  filters: state.pokeFilter.filters,
-});
-
-export default connect(mapState, null)(PokeTag);
+export default PokeTag;

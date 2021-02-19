@@ -35,7 +35,7 @@ const pokeSearch = (search) => {
 };
 
 const PokeList = ({
-  pokemons, perPage, loading,
+  pokemons = {}, perPage = 0, loading = true,
 }) => {
   const params = useParams();
   const pageNumber = Number.parseInt(params.num, 10);

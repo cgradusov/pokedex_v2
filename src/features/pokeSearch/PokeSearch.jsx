@@ -1,30 +1,41 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import React from 'react';
 import Input from 'antd/lib/input';
 import Form from 'antd/lib/form';
-import { updateSearch, setValid } from './pokeSeachSlice';
 
-const PokeSearch = ({ query, isValid, onClick }) => {
-  const dispatch = useDispatch();
-  const search = query.search ?? '';
-
-  useEffect(() => {
-    dispatch(updateSearch(search ?? ''));
-  }, [dispatch, search]);
+const PokeSearch = ({
+  search, onClick, setSearch,
+}) => {
+  const { value: searchValue, isValid } = search;
 
   const validate = (value) => /^[A-Za-z]+$|^[0-9]+$/g.test(value);
   const onChange = (e) => {
     const { value } = e.target;
+    const valid = validate(value) || value === '';
 
     // Update search on clear
     if (e.type === 'click' && value === '') {
-      onClick('');
+      setSearch({
+        value,
+        isValid: valid,
+      });
     }
 
-    const validationCheck = validate(value) || value === '';
-    if (validationCheck !== isValid) {
-      dispatch(setValid(validationCheck));
+    if (valid) {
+      setSearch({
+        value,
+        isValid: valid,
+      });
+    } else {
+      setSearch({
+        isValid: valid,
+      });
+    }
+  };
+
+  const onPressEnter = (value) => {
+    if (isValid) {
+      onClick(value, isValid);
     }
   };
 
@@ -33,14 +44,15 @@ const PokeSearch = ({ query, isValid, onClick }) => {
       validateStatus={isValid ? '' : 'error'}
       help={isValid ? '' : 'Should be combination of numbers or alphabets'}
     >
-      <Input onChange={onChange} onPressEnter={(e) => onClick(e.target.value)} onBlur={(e) => dispatch(updateSearch(e.target.value))} placeholder="Name or number" defaultValue={search} allowClear />
+      <Input
+        onChange={onChange}
+        onPressEnter={(e) => onPressEnter(e.target.value)}
+        placeholder="Name or number"
+        defaultValue={searchValue}
+        allowClear
+      />
     </Form.Item>
   );
 };
 
-const mapState = (state) => ({
-  query: state.router.location.query,
-  isValid: state.pokeSearch.isValid,
-});
-
-export default connect(mapState, null)(PokeSearch);
+export default PokeSearch;
