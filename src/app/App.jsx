@@ -5,10 +5,9 @@ import {
   Redirect, Route, Switch, HashRouter as Router,
 } from 'react-router-dom';
 import { createHashHistory } from 'history';
-import PokeHeader from '../features/pokeHeader/PokeHeader';
-import PokeList from '../features/pokeList/PokeList';
 import 'antd/dist/antd.css';
 import PokePage from '../features/pokePage/PokePage';
+import PokeContainer from '../features/pokeContainer/PokeContainer';
 import pokemons from '../constants/pokemonsList';
 import typesMap from '../constants/pokeTypes';
 
@@ -36,8 +35,8 @@ const App = () => {
           <Redirect to="/1" />
         </Route>
         <Route exact path="/:num">
-          <PokeHeader types={state.types} />
-          <PokeList
+          <PokeContainer
+            types={state.types}
             pokemons={state.pokemons}
             perPage={state.perPage}
             loading={state.loading}

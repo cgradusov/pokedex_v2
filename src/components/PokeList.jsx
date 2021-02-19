@@ -2,10 +2,9 @@
 import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
-import { useParams, useLocation } from 'react-router-dom';
-import PokeCard from '../pokeCard/PokeCard';
-import PokePagination from '../../components/pokePagination/PokePagination';
-import { formatNumber } from '../../utils/stringUtils';
+import PokeCard from '../features/pokeCard/PokeCard';
+import PokePagination from './pokePagination/PokePagination';
+import { formatNumber } from '../utils/stringUtils';
 
 const containerStyle = {
   minHeight: 'calc(100% - 70px - 41px - 41px)',
@@ -36,20 +35,11 @@ const pokeSearch = (search) => {
 
 const PokeList = ({
   pokemons = {}, perPage = 0, loading = true,
+  toggleFilter, filters, searchValue = '', filtersValue = '', pageNumber, searchParams,
 }) => {
-  const params = useParams();
-  const pageNumber = Number.parseInt(params.num, 10);
-
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const query = Object.fromEntries(searchParams.entries());
-
-  const search = (query.search ?? '').toLowerCase();
-  const filters = (query.filters ?? '').toLowerCase();
-
   const pokeList = Object.entries(pokemons);
-  const searchedPokeList = search !== '' ? pokeList.filter(pokeSearch(search)) : pokeList;
-  const filteredPokeList = filters !== '' ? searchedPokeList.filter(pokeFilter(filters)) : searchedPokeList;
+  const searchedPokeList = searchValue !== '' ? pokeList.filter(pokeSearch(searchValue)) : pokeList;
+  const filteredPokeList = filtersValue !== '' ? searchedPokeList.filter(pokeFilter(filtersValue)) : searchedPokeList;
 
   const pokeListPage = filteredPokeList.slice(
     (pageNumber - 1) * perPage,
@@ -75,6 +65,8 @@ const PokeList = ({
                     desc={el.desc}
                     types={el.types}
                     loading={loading}
+                    toggleFilter={toggleFilter}
+                    filters={filters}
                   />
                 </Col>
               ))}

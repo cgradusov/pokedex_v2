@@ -8,7 +8,7 @@ import PokeTag from '../../components/PokeTag';
 import { capitalizeString, formatNumber } from '../../utils/stringUtils';
 
 const PokeCard = ({
-  loading = false, name, num, desc, types,
+  loading = false, name, num, desc, types, filters, toggleFilter,
 }) => {
   const cardStyle = {
     height: '100%',
@@ -68,7 +68,7 @@ const PokeCard = ({
         <p />
         <div style={descriptionStyle}>
           {types.map((type) => (
-            <PokeTag type={type} key={type} />
+            <PokeTag type={type} key={type} filters={filters} toggleFilter={toggleFilter} />
           ))}
         </div>
       </Skeleton>
