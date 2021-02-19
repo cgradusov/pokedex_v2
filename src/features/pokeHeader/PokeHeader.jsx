@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import Divider from 'antd/lib/divider';
 import PokeSearch from '../pokeSearch/PokeSearch';
 import PokeTypesFilter from '../../components/PokeTypesFilter';
 
@@ -122,14 +121,13 @@ const PokeHeader = ({
             <h1>Pokedex</h1>
           </Link>
         </Col>
-        <Col {...filterColProps}>
-          <PokeTypesFilter types={types} filters={filters} toggleFilter={toggleFilter} />
-        </Col>
         <Col {...searchColProps} style={{ maxHeight: '56px', minWidth: '200px' }}>
           <PokeSearch onClick={onClick} search={search} setSearch={setSearch} />
         </Col>
+        <Col {...filterColProps}>
+          <PokeTypesFilter types={types} filters={filters} toggleFilter={toggleFilter} />
+        </Col>
       </Row>
-      <Divider orientation="left" style={{ margin: '12px 0 24px 0' }} />
     </div>
   );
 };
