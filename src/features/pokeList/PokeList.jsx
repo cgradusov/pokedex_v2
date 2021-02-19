@@ -4,7 +4,7 @@ import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import { useParams, useLocation } from 'react-router-dom';
 import PokeCard from '../pokeCard/PokeCard';
-import PokePagination from '../pokePagination/PokePagination';
+import PokePagination from '../../components/pokePagination/PokePagination';
 import { formatNumber } from '../../utils/stringUtils';
 
 const containerStyle = {
@@ -83,6 +83,7 @@ const PokeList = ({
               <Col>
                 <PokePagination
                   searchParams={searchParams}
+                  pageNumber={pageNumber}
                   count={filteredPokeList.length}
                   pokemonsPerPage={perPage}
                 />

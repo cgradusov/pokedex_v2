@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Pagination from 'antd/lib/pagination';
@@ -58,26 +58,20 @@ const getCustomLink = (searchParams) => (pagenumber, type, originalElement) => {
 };
 
 const PokePagination = ({
-  count, pokemonsPerPage, searchParams,
-}) => {
-  const params = useParams();
-  const { num } = params;
-  const pageNumber = Number.parseInt(num, 10);
-
-  return (
-    <Row gutter={[0, 16]} justify="center">
-      <Col style={{ margin: '15px 0' }}>
-        <Pagination
-          current={pageNumber}
-          total={count}
-          onChange={() => window.scrollTo(0, 0)}
-          defaultPageSize={pokemonsPerPage}
-          showSizeChanger={false}
-          itemRender={getCustomLink(searchParams)}
-        />
-      </Col>
-    </Row>
-  );
-};
+  count, pokemonsPerPage, searchParams, pageNumber,
+}) => (
+  <Row gutter={[0, 16]} justify="center">
+    <Col style={{ margin: '15px 0' }}>
+      <Pagination
+        current={pageNumber}
+        total={count}
+        onChange={() => window.scrollTo(0, 0)}
+        defaultPageSize={pokemonsPerPage}
+        showSizeChanger={false}
+        itemRender={getCustomLink(searchParams)}
+      />
+    </Col>
+  </Row>
+);
 
 export default PokePagination;
