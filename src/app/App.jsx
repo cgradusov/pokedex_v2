@@ -2,13 +2,12 @@
 import React, { useState } from 'react';
 import Layout from 'antd/lib/layout';
 import {
-  Redirect, Route, Switch,
+  Redirect, Route, Switch, HashRouter as Router,
 } from 'react-router-dom';
-import { ConnectedRouter as Router } from 'connected-react-router';
+import { createHashHistory } from 'history';
 import PokeHeader from '../features/pokeHeader/PokeHeader';
 import PokeList from '../features/pokeList/PokeList';
 import 'antd/dist/antd.css';
-import { history } from './store';
 import PokePage from '../features/pokePage/PokePage';
 import pokemons from '../constants/pokemonsList';
 import typesMap from '../constants/pokeTypes';
@@ -24,6 +23,8 @@ const initialState = {
   typesMap,
   types: Object.keys(typesMap),
 };
+
+const history = createHashHistory();
 
 const App = () => {
   const [state] = useState(initialState);
