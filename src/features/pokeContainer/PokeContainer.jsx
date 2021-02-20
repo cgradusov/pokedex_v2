@@ -61,13 +61,16 @@ const PokeContainer = ({
       queryParams.set('filters', selectedTypes.join('-'));
     }
 
-    history.push({
-      pathname: '/1',
-      search: `${queryParams}`,
-      state: {
-        from: location.pathname,
-      },
-    });
+    // reset to first page only in filters or search is new
+    if (queryParams.toString() !== (new URLSearchParams(query)).toString()) {
+      history.push({
+        pathname: '/1',
+        search: `${queryParams}`,
+        state: {
+          from: location.pathname,
+        },
+      });
+    }
   };
 
   useEffect(() => {
