@@ -4,7 +4,7 @@ import Input from 'antd/lib/input';
 import Form from 'antd/lib/form';
 
 const PokeSearch = ({
-  search, onClick, setSearch,
+  search, setSearch,
 }) => {
   const { value: searchValue, isValid } = search;
 
@@ -33,12 +33,6 @@ const PokeSearch = ({
     }
   };
 
-  const onPressEnter = (value) => {
-    if (isValid) {
-      onClick(value, isValid);
-    }
-  };
-
   return (
     <Form.Item
       validateStatus={isValid ? '' : 'error'}
@@ -46,7 +40,6 @@ const PokeSearch = ({
     >
       <Input
         onChange={onChange}
-        onPressEnter={(e) => onPressEnter(e.target.value)}
         placeholder="Name or number"
         defaultValue={searchValue}
         allowClear

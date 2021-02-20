@@ -44,7 +44,7 @@ const gutterY = {
 };
 
 const PokeHeader = ({
-  types = [], onClick, search, setSearch, filters, toggleFilter,
+  types = [], search, setSearch, filters, toggleFilter,
 }) => (
   <div style={{ margin: '10px 15px' }}>
     <Row justify="space-between" align="top" gutter={[0, gutterY]}>
@@ -54,7 +54,7 @@ const PokeHeader = ({
         </Link>
       </Col>
       <Col {...searchColProps} style={{ maxHeight: '56px', minWidth: '200px' }}>
-        <PokeSearch onClick={onClick} search={search} setSearch={setSearch} />
+        <PokeSearch search={search} setSearch={setSearch} />
       </Col>
       <Col {...filterColProps}>
         <PokeTypesFilter types={types} filters={filters} toggleFilter={toggleFilter} />
