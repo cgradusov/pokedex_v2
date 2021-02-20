@@ -37,7 +37,7 @@ const PokeCard = ({
     });
   };
 
-  const imgUrl = `https://assets.pokemon.com/assets/cms2/img/pokedex/full/${formatNumber(num)}.png`;
+  const imgUrl = `/pokedex/assets/${formatNumber(num)}.png`;
 
   return (
     <div style={cardStyle}>
