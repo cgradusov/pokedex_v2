@@ -96,7 +96,7 @@ const PokePage = ({
                     <img
                       className="pokepage-avatar"
                       src={`/pokedex/assets/${formatNumber(num)}.png`}
-                      alt=""
+                      alt={name}
                     />
                   </Col>
                   <Col {...statsColProps} className="pokepage-stats" flex="200px">
