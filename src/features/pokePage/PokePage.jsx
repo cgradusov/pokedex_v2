@@ -8,7 +8,7 @@ import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import Skeleton from 'antd/lib/skeleton';
 import LeftOutlined from '@ant-design/icons/LeftOutlined';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 import PokeStat from '../../components/PokeStat';
 import PokeTag from '../../components/PokeTag';
 import PokeGender from '../../components/PokeGender';
@@ -67,7 +67,7 @@ const gutterY = {
 };
 
 const PokePage = ({
-  loading, pokemons, globalError,
+  loading, pokemons, globalError, families = {},
 }) => {
   const params = useParams();
   const { name } = params;
@@ -81,9 +81,18 @@ const PokePage = ({
   const num = id.toString();
   const weakness = calculateWeaknesses(types).sort();
 
+  const family = families[id].filter((p) => p.name !== name);
+
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual';
+    return () => {
+      window.history.scrollRestoration = 'auto';
+    };
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+  });
 
   return (
     <div style={containerStyle}>
@@ -125,6 +134,18 @@ const PokePage = ({
                     <div className="description">
                       For some time after its birth, it grows by gaining
                       nourishment from the seed on its back.
+                    </div>
+                    <div className="family">
+                      {family.map((p) => (
+                        <Link key={p.id} to={`/pokemon/${p.name}`}>
+                          <img
+                            width="64"
+                            height="64"
+                            src={`/pokedex/assets/${formatNumber(p.id.toString())}.png`}
+                            alt={p.name}
+                          />
+                        </Link>
+                      ))}
                     </div>
                   </Col>
                   <Col {...typesColProps}>

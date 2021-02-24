@@ -10,6 +10,7 @@ import PokePage from '../features/pokePage/PokePage';
 import PokeContainer from '../features/pokeContainer/PokeContainer';
 import pokemons from '../constants/pokemonsList';
 import typesMap from '../constants/pokeTypes';
+import families from '../constants/pokeEvolution';
 
 const { Footer } = Layout;
 
@@ -21,6 +22,7 @@ const initialState = {
   pokemons,
   typesMap,
   types: Object.keys(typesMap),
+  families,
 };
 
 const history = createHashHistory();
@@ -43,7 +45,12 @@ const App = () => {
           />
         </Route>
         <Route path="/pokemon/:name">
-          <PokePage loading={state.loading} globalError={state.error} pokemons={state.pokemons} />
+          <PokePage
+            loading={state.loading}
+            globalError={state.error}
+            pokemons={state.pokemons}
+            families={state.families}
+          />
         </Route>
       </Switch>
       <Footer style={{ textAlign: 'center' }}>
