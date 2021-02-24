@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import PokeHeader from '../../components/PokeHeader';
-import PokeList from '../../components/PokeList';
+import PokeHeader from '../../components/pokeHeader/PokeHeader';
+import PokeList from '../../components/pokeList/PokeList';
 
 const PokeContainer = ({
   types, pokemons, perPage, loading,

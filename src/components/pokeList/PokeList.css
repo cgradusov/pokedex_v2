@@ -1,0 +1,11 @@
+.pokelist {
+    min-height: calc(100% - 70px - 41px - 41px);
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    margin-top: 16px;
+}
+
+.pokelist-pagination {
+    margin-top: 10px;
+}

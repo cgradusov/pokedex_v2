@@ -1,0 +1,31 @@
+.pokecard {
+    height: 100%;
+    margin: 15px 10px;
+    border: 1px solid #f0f0f0;
+    border-radius: 9px;
+}
+
+.pokecard-heading {
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+    text-shadow: 0px 0px 5px #000000;
+    text-align: center;
+    height: 215px;
+    padding-top: 20px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.pokecard-description {
+    color: rgba(0, 0, 0, 0.45);
+    padding: 24px;
+}
+
+.pokecard-tags {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 0 24px;
+}

@@ -4,8 +4,9 @@ import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
 import { Link } from 'react-router-dom';
-import PokeSearch from '../features/pokeSearch/PokeSearch';
-import PokeTypesFilter from './PokeTypesFilter';
+import PokeSearch from '../../features/pokeSearch/PokeSearch';
+import PokeTypesFilter from '../PokeTypesFilter';
+import './PokeHeader.css';
 
 const headingColProps = {
   xs: { order: 1, span: 15, offset: 9 },
@@ -46,14 +47,14 @@ const gutterY = {
 const PokeHeader = ({
   types = [], search, setSearch, filters, toggleFilter,
 }) => (
-  <div style={{ margin: '10px 15px' }}>
+  <div className="header">
     <Row justify="space-between" align="top" gutter={[0, gutterY]}>
       <Col {...headingColProps}>
         <Link to="/">
           <h1>Pokedex</h1>
         </Link>
       </Col>
-      <Col {...searchColProps} style={{ maxHeight: '56px', minWidth: '200px' }}>
+      <Col {...searchColProps} className="header-search">
         <PokeSearch search={search} setSearch={setSearch} />
       </Col>
       <Col {...filterColProps}>

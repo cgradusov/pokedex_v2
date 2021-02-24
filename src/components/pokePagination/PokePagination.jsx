@@ -61,7 +61,7 @@ const PokePagination = ({
   count, pokemonsPerPage, searchParams, pageNumber,
 }) => (
   <Row gutter={[0, 16]} justify="center">
-    <Col style={{ margin: '15px 0' }}>
+    <Col className="pagination-container">
       <Pagination
         current={pageNumber}
         total={count}

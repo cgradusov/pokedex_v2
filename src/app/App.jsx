@@ -11,6 +11,7 @@ import PokeContainer from '../features/pokeContainer/PokeContainer';
 import pokemons from '../constants/pokemonsList';
 import typesMap from '../constants/pokeTypes';
 import families from '../constants/pokeEvolution';
+import './App.css';
 
 const { Footer } = Layout;
 
@@ -53,7 +54,7 @@ const App = () => {
           />
         </Route>
       </Switch>
-      <Footer style={{ textAlign: 'center' }}>
+      <Footer className="center">
         Pokedex App ©2021 Created by
         {' '}
         <a href="https://github.com/cgradusov">Constantine Gradusov</a>

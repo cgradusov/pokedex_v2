@@ -1,21 +1,45 @@
-.stats {
+.pokepage-container {
+    min-height: calc(100% - 70px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.pokepage-card {
+    border: 1px solid #f0f0f0;
+    width: 85%;
+    padding: 30px;
+    margin-bottom: 50px;
+    max-width: 1100px;
+}
+
+.pokepage-heading {
+    text-align: center;
+}
+
+.pokepage-stats {
     margin-top: 0;
 }
 
-.back-button {
+.pokepage-back-button {
     height: 32px;
     width: 100%;
 }
 
-.avatar {
+.pokepage-avatar {
     width: 100%;
 }
 
-.description {
+.pokepage-description {
     margin-left: 5px;
 }
 
-.specs {
+.pokepage-specs-container {
+    max-width: 350px;
+}
+
+.pokepage-specs {
     display: flex;
     margin-left: 5px;
     justify-content: space-between;
@@ -24,29 +48,29 @@
 }
 
 @media screen and (min-width: 768px) {
-    .description {
+    .pokepage-description {
         margin-left: 0;
     }
-    .specs {
+    .pokepage-specs {
         margin-left: 0;
     }
 }
 
 @media screen and (min-width: 992px) {
-    .stats {
+    .pokepage-stats {
         margin-top: 50px;
     }
-    .back-button {
+    .pokepage-back-button {
         height: 48px;
     }
-    .avatar {
+    .pokepage-avatar {
         width: 350px;
     }
-    .specs {
+    .pokepage-specs {
         display: flex;
         justify-content: flex-start;
     }
-    .specs > * {
+    .pokepage-specs>* {
         margin-right: 15px;
     }
 }

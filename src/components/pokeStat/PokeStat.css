@@ -1,0 +1,13 @@
+.pokestat-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.pokestat-info {
+    width: 20px;
+}
+
+.pokestat-progress {
+    margin: 0 10px;
+}

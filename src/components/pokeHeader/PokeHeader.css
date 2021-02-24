@@ -1,0 +1,8 @@
+.header {
+    margin: 10px 15px;
+}
+
+.header-search {
+    max-height: 56px;
+    min-width: 200px;
+}

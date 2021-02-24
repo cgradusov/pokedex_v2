@@ -9,28 +9,12 @@ import Col from 'antd/lib/col';
 import Skeleton from 'antd/lib/skeleton';
 import LeftOutlined from '@ant-design/icons/LeftOutlined';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import PokeStat from '../../components/PokeStat';
+import PokeStat from '../../components/pokeStat/PokeStat';
 import PokeTag from '../../components/pokeTag/PokeTag';
 import PokeGender from '../../components/PokeGender';
 import { capitalizeString, formatNumber } from '../../utils/stringUtils';
 import calculateWeaknesses from '../../utils/pokeWeaknessCalc';
 import './PokePage.css';
-
-const containerStyle = {
-  minHeight: 'calc(100% - 70px)',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '50px',
-};
-
-const cardStyle = {
-  border: '1px solid #f0f0f0',
-  width: '85%',
-  padding: '30px',
-  marginBottom: '50px',
-  maxWidth: '1100px',
-};
 
 const headingColProps = {
   xs: { span: 24, order: 0 },
@@ -95,33 +79,33 @@ const PokePage = ({
   });
 
   return (
-    <div style={containerStyle}>
-      <Button onClick={() => history.goBack()} className="back-button">
+    <div className="pokepage-container">
+      <Button onClick={() => history.goBack()} className="pokepage-back-button">
         <LeftOutlined />
       </Button>
-      <div style={cardStyle}>
+      <div className="pokepage-card">
         {
           globalError === null && error === null
             ? (
               <Skeleton loading={loading} active>
                 <Row justify="center" gutter={[0, gutterY]}>
                   <Col {...headingColProps}>
-                    <h1 style={{ textAlign: 'center' }}>{`${capitalizeString(name)} #${formatNumber(num)}`}</h1>
+                    <h1 className="pokepage-heading">{`${capitalizeString(name)} #${formatNumber(num)}`}</h1>
                   </Col>
                   <Col {...imgColProps}>
                     <img
-                      className="avatar"
+                      className="pokepage-avatar"
                       src={`/pokedex/assets/${formatNumber(num)}.png`}
                       alt=""
                     />
                   </Col>
-                  <Col {...statsColProps} className="stats" flex="200px">
+                  <Col {...statsColProps} className="pokepage-stats" flex="200px">
                     {stats.map((s) => (
                       <PokeStat param={s.name} key={s.name} value={s.bs} />
                     ))}
                   </Col>
-                  <Col {...descriptionColProps} style={{ maxWidth: '350px' }}>
-                    <div className="specs">
+                  <Col {...descriptionColProps} className="pokepage-specs-container">
+                    <div className="pokepage-specs">
                       <span>{`Height: ${height / 10}m`}</span>
                       <span>{`Weight: ${weight / 10}kg`}</span>
                       <span>
@@ -131,11 +115,11 @@ const PokePage = ({
                       </span>
                     </div>
                     <p />
-                    <div className="description">
+                    <div className="pokepage-description">
                       For some time after its birth, it grows by gaining
                       nourishment from the seed on its back.
                     </div>
-                    <div className="family">
+                    <div className="pokepage-family">
                       {family.map((p) => (
                         <Link key={p.id} to={`/pokemon/${p.name}`}>
                           <img

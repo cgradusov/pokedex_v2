@@ -2,17 +2,10 @@
 import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
-import PokeCard from '../features/pokeCard/PokeCard';
-import PokePagination from './pokePagination/PokePagination';
-import { formatNumber } from '../utils/stringUtils';
-
-const containerStyle = {
-  minHeight: 'calc(100% - 70px - 41px - 41px)',
-  display: 'flex',
-  flexDirection: 'column',
-  rowGap: '16px',
-  marginTop: '16px',
-};
+import PokeCard from '../../features/pokeCard/PokeCard';
+import PokePagination from '../pokePagination/PokePagination';
+import { formatNumber } from '../../utils/stringUtils';
+import './PokeList.css';
 
 const responsiveColProps = {
   xs: { span: 24 },
@@ -47,7 +40,7 @@ const PokeList = ({
   );
 
   return (
-    <div style={containerStyle}>
+    <div className="pokelist">
       { pokeListPage.length !== 0
         ? (
           <>
@@ -71,7 +64,7 @@ const PokeList = ({
                 </Col>
               ))}
             </Row>
-            <Row justify="center" style={{ marginTop: '10px' }}>
+            <Row justify="center" className="pokelist-pagination">
               <Col>
                 <PokePagination
                   searchParams={searchParams}

@@ -2,6 +2,7 @@
 import React from 'react';
 import Progress from 'antd/lib/progress';
 import { presetPalettes } from '@ant-design/colors';
+import './PokeStat.css';
 
 const {
   lime, blue, volcano, orange, red, cyan,
@@ -28,10 +29,10 @@ const nameShortByParam = {
 const PokeStat = ({ param, value }) => {
   const [name, short] = nameShortByParam[param];
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'start' }}>
-      <span style={{ width: '20px' }} title={name}>{short}</span>
-      <Progress steps={13} percent={value / 2.25} strokeColor={statColor[param]} showInfo={false} style={{ margin: '0 10px' }} />
-      <span style={{ width: '20px' }}>{value}</span>
+    <div className="pokestat-container">
+      <span className="pokestat-info" title={name}>{short}</span>
+      <Progress steps={13} percent={value / 2.25} strokeColor={statColor[param]} showInfo={false} className="pokestat-progress" />
+      <span className="pokestat-info">{value}</span>
     </div>
   );
 };
