@@ -10,7 +10,7 @@ import Skeleton from 'antd/lib/skeleton';
 import LeftOutlined from '@ant-design/icons/LeftOutlined';
 import { useParams, useHistory, Link } from 'react-router-dom';
 import PokeStat from '../../components/PokeStat';
-import PokeTag from '../../components/PokeTag';
+import PokeTag from '../../components/pokeTag/PokeTag';
 import PokeGender from '../../components/PokeGender';
 import { capitalizeString, formatNumber } from '../../utils/stringUtils';
 import calculateWeaknesses from '../../utils/pokeWeaknessCalc';

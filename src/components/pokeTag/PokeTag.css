@@ -1,0 +1,27 @@
+.tag-style {
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 20%;
+    line-height: 20px;
+    font-variant: tabular-nums;
+    font-feature-settings: tnum;
+    display: inline-flex;
+    height: auto;
+    white-space: nowrap;
+    margin: 0 8px 0 0;
+    padding: 2px 10px;
+    user-select: none;
+    justify-content: center;
+}
+
+.tag-size {
+    width: 53px;
+    font-size: 12px !important;
+}
+
+@media screen and (min-width: 768px) {
+    .tag-size {
+        width: 60px;
+        font-size: 14px !important;
+    }
+}

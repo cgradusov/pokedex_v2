@@ -2,7 +2,7 @@
 import React from 'react';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
-import PokeTag from './PokeTag';
+import PokeTag from './pokeTag/PokeTag';
 
 const responsiveColProps = {
   xs: { span: 4 },
@@ -20,7 +20,7 @@ const PokeTypesFilter = ({
     {types.map((el) => (
       // eslint-disable-next-line react/jsx-props-no-spreading
       <Col key={el} {...responsiveColProps}>
-        <PokeTag key={el} type={el} toggleFilter={toggleFilter} filters={filters} width="60px" />
+        <PokeTag key={el} type={el} toggleFilter={toggleFilter} filters={filters} />
       </Col>
     ))}
   </Row>
