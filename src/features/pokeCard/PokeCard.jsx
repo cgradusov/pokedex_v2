@@ -3,7 +3,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import Skeleton from 'antd/lib/skeleton';
-import { useLocation, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PokeTag from '../../components/PokeTag';
 import { capitalizeString, formatNumber } from '../../utils/stringUtils';
 
@@ -25,8 +25,6 @@ const PokeCard = ({
     padding: '0 24px',
   };
 
-  const location = useLocation();
-
   const imgUrl = `/pokedex/assets/${formatNumber(num)}.png`;
   const headingStyle = {
     background: `no-repeat url(${imgUrl})`,
@@ -46,14 +44,7 @@ const PokeCard = ({
   return (
     <div style={cardStyle}>
       <Skeleton loading={loading} active>
-        <Link
-          to={{
-            pathname: `/pokemon/${name}`,
-            state: {
-              from: location.pathname,
-            },
-          }}
-        >
+        <Link to={`/pokemon/${name}`}>
           <h2 style={headingStyle}>{headingText}</h2>
         </Link>
         <p
