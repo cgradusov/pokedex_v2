@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from 'antd/lib/layout';
 import {
   Redirect, Route, Switch, HashRouter as Router,
@@ -30,6 +30,10 @@ const history = createHashHistory();
 
 const App = () => {
   const [state] = useState(initialState);
+  useEffect(() => {
+    const loader = document.getElementById('loading-container');
+    loader?.remove();
+  }, []);
 
   return (
     <Router history={history}>

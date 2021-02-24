@@ -1,0 +1,34 @@
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+#loading-container {
+    height: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: center no-repeat url('/pokedex/assets/loading.png');
+    background-size: 128px 128px;
+}
+
+#loading {
+    display: inline-block;
+    border-right: 2px solid #88b889;
+    border-radius: 50%;
+    animation-name: spin;
+    animation-duration: 1500ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    height: 192px;
+    width: 192px;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
