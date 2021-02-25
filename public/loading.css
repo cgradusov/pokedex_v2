@@ -8,7 +8,7 @@ html, body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: center no-repeat url('/pokedex/assets/loading.png');
+    background: center no-repeat url('/pokedex_v2/assets/loading.png');
     background-size: 128px 128px;
 }
 

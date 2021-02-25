@@ -15,7 +15,7 @@ const PokeCard = ({
     padding: loading ? '24px' : '0',
   };
 
-  const imgUrl = `/pokedex/assets/${formatNumber(num)}.png`;
+  const imgUrl = `/pokedex_v2/assets/${formatNumber(num)}.png`;
   const headingStyle = {
     backgroundImage: `url(${imgUrl})`,
   };
