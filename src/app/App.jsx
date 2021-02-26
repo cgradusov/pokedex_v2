@@ -4,7 +4,6 @@ import Layout from 'antd/lib/layout';
 import {
   Redirect, Route, Switch, HashRouter as Router,
 } from 'react-router-dom';
-import { createHashHistory } from 'history';
 import 'antd/dist/antd.css';
 import PokePage from '../features/pokePage/PokePage';
 import PokeContainer from '../features/pokeContainer/PokeContainer';
@@ -26,8 +25,6 @@ const initialState = {
   families,
 };
 
-const history = createHashHistory();
-
 const App = () => {
   const [state] = useState(initialState);
   useEffect(() => {
@@ -36,7 +33,7 @@ const App = () => {
   }, []);
 
   return (
-    <Router history={history}>
+    <Router>
       <Switch>
         <Route exact path="/">
           <Redirect to="/1" />
