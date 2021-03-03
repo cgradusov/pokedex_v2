@@ -911,9 +911,9 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(cacheName)
       // Add your file to cache
-      .then((cache) => cache.addAll(filesList)),
-    // Tell SW to end 'waiting' state
-    // .then(() => self.skipWaiting()),
+      .then((cache) => cache.addAll(filesList))
+      // Tell SW to end 'waiting' state
+      .then(() => self.skipWaiting()),
   );
 });
 
