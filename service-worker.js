@@ -913,6 +913,8 @@ self.addEventListener('install', (event) => {
 
   if (isInWebAppChrome || isInWebAppiOS) {
     alert('WEBAPP');
+  } else {
+    alert('NOT WEB APP');
   }
 
   event.waitUntil(
