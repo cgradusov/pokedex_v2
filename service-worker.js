@@ -908,13 +908,13 @@ const filesList = [
 ];
 
 self.addEventListener('install', (event) => {
-  isInWebAppiOS = (window.navigator.standalone === true);
-  isInWebAppChrome = (window.matchMedia('(display-mode: standalone)').matches);
+  const isInWebAppiOS = (self.navigator.standalone === true);
+  const isInWebAppChrome = (self.matchMedia('(display-mode: standalone)').matches);
 
   if (isInWebAppChrome || isInWebAppiOS) {
-    alert('WEBAPP');
+    console.log('WEBAPP');
   } else {
-    alert('NOT WEB APP');
+    console.log('NOT WEB APP');
   }
 
   event.waitUntil(
