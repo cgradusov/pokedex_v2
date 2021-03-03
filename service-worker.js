@@ -912,18 +912,14 @@ self.addEventListener('install', (event) => {
   const isInWebAppChrome = (self.matchMedia('(display-mode: standalone)').matches);
 
   if (isInWebAppChrome || isInWebAppiOS) {
-    console.log('WEBAPP');
-  } else {
-    console.log('NOT WEB APP');
+    event.waitUntil(
+      caches.open(cacheName)
+        // Add your file to cache
+        .then((cache) => cache.addAll(filesList))
+        // Tell SW to end 'waiting' state
+        .then(() => self.skipWaiting()),
+    );
   }
-
-  event.waitUntil(
-    caches.open(cacheName)
-      // Add your file to cache
-      .then((cache) => cache.addAll(filesList))
-      // Tell SW to end 'waiting' state
-      .then(() => self.skipWaiting()),
-  );
 });
 
 self.addEventListener('activate', (event) => {
