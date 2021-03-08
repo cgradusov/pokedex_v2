@@ -6,6 +6,7 @@ import Col from 'antd/lib/col';
 import { Link } from 'react-router-dom';
 import PokeSearch from '../../features/pokeSearch/PokeSearch';
 import PokeTypesFilter from '../PokeTypesFilter';
+import PokeCacheButton from '../pokeCacheButton/PokeCacheButton';
 import './PokeHeader.css';
 
 const headingColProps = {
@@ -50,9 +51,16 @@ const PokeHeader = ({
   <div className="header">
     <Row justify="space-between" align="top" gutter={[0, gutterY]}>
       <Col {...headingColProps}>
-        <Link to="/">
-          <h1>Pokedex</h1>
-        </Link>
+        <Row align="middle" justify="space-between">
+          <Col>
+            <Link to="/">
+              <h1>Pokedex</h1>
+            </Link>
+          </Col>
+          <Col>
+            <PokeCacheButton />
+          </Col>
+        </Row>
       </Col>
       <Col {...searchColProps} className="header-search">
         <PokeSearch search={search} setSearch={setSearch} />

@@ -1,0 +1,27 @@
+.poke-cache-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.poke-cache-button-icon {
+    margin-right: 15px;
+    min-width: 20px;
+    max-width: 20px;
+}
+
+.poke-cache-button-progress {
+    animation-name: spin;
+    animation-duration: 1500ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
