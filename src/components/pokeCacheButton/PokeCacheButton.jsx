@@ -1,19 +1,26 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'antd/lib/button';
 import Progress from 'antd/lib/progress';
 import DownloadOutlined from '@ant-design/icons/DownloadOutlined';
 import './PokeCacheButton.css';
+import pokeImagesList from '../../constants/pokeImagesList';
 
 const PokeCacheButton = () => {
   const [loadingStatus, setLoadingStatus] = useState('init'); // ['init', 'progress', 'done']
-  const [counter, updateCounter] = useState(0);
-  const filesCount = 904; // TODO: Read length from files list
+
+  useEffect(() => {
+    caches.open('pokeimages').then((cache) => cache.keys()).then((keys) => {
+      if (keys.length >= pokeImagesList.length - 1) {
+        setLoadingStatus('done');
+      }
+    });
+  }, []);
 
   const onClick = () => {
     setLoadingStatus('progress');
-    // TODO: Add caching code
-    updateCounter(100);
+    const fetchList = pokeImagesList.map(async (link) => fetch(`/pokedex_v2${link}`));
+    Promise.all(fetchList).then(() => setLoadingStatus('done'));
   };
 
   return (
@@ -27,7 +34,7 @@ const PokeCacheButton = () => {
       {loadingStatus === 'done' ? 'DONE' : (
         <>
           <div className="poke-cache-button-icon">
-            {loadingStatus === 'progress' ? (<Progress type="circle" percent={counter / filesCount} width={22} format={() => ''} className="poke-cache-button-progress" />) : <DownloadOutlined />}
+            {loadingStatus === 'progress' ? (<Progress type="circle" percent={25} width={22} format={() => ''} className="poke-cache-button-progress" />) : <DownloadOutlined />}
           </div>
           Update offline cache
         </>
