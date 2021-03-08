@@ -20,7 +20,7 @@
         "react",
         "react-hooks"
     ],
-    "ignorePatterns": ["scripts/*.js", "config/*.js"],
+    "ignorePatterns": ["scripts/*.js", "config/*.js", "build/*.js", "src/service-worker.js"],
     "rules": {
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn"
