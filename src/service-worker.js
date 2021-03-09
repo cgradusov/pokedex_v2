@@ -8,7 +8,7 @@
 import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
-import { registerRoute } from 'workbox-routing';
+import { registerRoute, setCatchHandler } from 'workbox-routing';
 import { CacheFirst } from 'workbox-strategies';
 
 clientsClaim();
@@ -54,7 +54,7 @@ registerRoute(
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
-      new ExpirationPlugin({ maxEntries: 2000 }),
+      // new ExpirationPlugin({ maxEntries: 2000 }),
     ],
   })
 );
