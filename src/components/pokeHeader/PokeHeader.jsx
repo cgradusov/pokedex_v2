@@ -62,9 +62,13 @@ const PokeHeader = ({
               Pokedex
             </Link>
           </Col>
-          <Col>
-            <PokeCacheButton />
-          </Col>
+          { window.navigator.standalone
+            ? (
+              <Col>
+                <PokeCacheButton />
+              </Col>
+            )
+            : null}
         </Row>
       </Col>
       <Col {...searchColProps} className="header-search">
