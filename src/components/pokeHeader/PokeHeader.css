@@ -6,3 +6,7 @@
     max-height: 56px;
     min-width: 200px;
 }
+
+.custom-title {
+    margin-bottom: 0 !important;
+}
