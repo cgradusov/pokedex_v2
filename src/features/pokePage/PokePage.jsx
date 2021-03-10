@@ -59,7 +59,7 @@ const PokePage = ({
   const pokemon = pokemons[name];
   const error = typeof pokemon !== 'undefined' ? null : 'Pokemon Not Found';
   const {
-    id = 0, height = 0, weight = 0, types = [], stats = [], gender = 0,
+    id = 0, height = 0, weight = 0, types = [], stats = [], gender = 0, desc = '',
   } = pokemon ?? {};
 
   const num = id.toString();
@@ -116,8 +116,7 @@ const PokePage = ({
                     </div>
                     <p />
                     <div className="pokepage-description">
-                      For some time after its birth, it grows by gaining
-                      nourishment from the seed on its back.
+                      {desc}
                     </div>
                     <div className="pokepage-family">
                       {family.map((p) => (
