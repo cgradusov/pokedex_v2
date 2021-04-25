@@ -1,14 +1,22 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import Progress from 'antd/lib/progress';
 import { presetPalettes } from '@ant-design/colors';
 import './PokeStat.css';
+import PropTypes from 'prop-types';
 
 const {
   lime, blue, volcano, orange, red, cyan,
 } = presetPalettes;
 
-const statColor = {
+type statColorType = {
+  [key: string]: string,
+}
+
+type nameShortByParamType = {
+  [key: string]: string[],
+}
+
+const statColor: statColorType = {
   hp: red[5],
   attack: orange[5],
   defense: blue[5],
@@ -17,7 +25,7 @@ const statColor = {
   speed: lime[5],
 };
 
-const nameShortByParam = {
+const nameShortByParam: nameShortByParamType = {
   hp: ['HP', 'HP'],
   attack: ['Attack', 'AP'],
   defense: ['Defence', 'DF'],
@@ -26,7 +34,12 @@ const nameShortByParam = {
   speed: ['Speed', 'SP'],
 };
 
-const PokeStat = ({ param, value }) => {
+type PokeStatProps = {
+  param: string,
+  value: number
+}
+
+const PokeStat = ({ param, value } : PokeStatProps) => {
   const [name, short] = nameShortByParam[param];
   return (
     <div className="pokestat-container">
@@ -35,6 +48,11 @@ const PokeStat = ({ param, value }) => {
       <span className="pokestat-info">{value}</span>
     </div>
   );
+};
+
+PokeStat.propTypes = {
+  param: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
 };
 
 export default PokeStat;

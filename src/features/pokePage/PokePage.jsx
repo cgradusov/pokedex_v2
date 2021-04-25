@@ -9,7 +9,7 @@ import Col from 'antd/lib/col';
 import Skeleton from 'antd/lib/skeleton';
 import LeftOutlined from '@ant-design/icons/LeftOutlined';
 import { useParams, useHistory, Link } from 'react-router-dom';
-import PokeStat from '../../components/pokeStat/PokeStat';
+import PokeStat from '../../components/pokeStat/PokeStat.tsx';
 import PokeTag from '../../components/pokeTag/PokeTag';
 import PokeGender from '../../components/PokeGender';
 import { capitalizeString, formatNumber } from '../../utils/stringUtils';
