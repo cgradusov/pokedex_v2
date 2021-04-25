@@ -24,27 +24,27 @@ npm i
 ```  
 or  
 ```bash
-yarn
+yarn install
 ```  
 
 ## Starting project  
 
 ```bash
-npm start
+npm run start
 ```  
 or  
 ```bash
-yarn run start
+yarn start
 ```  
 
 ## Deploy  
 Change homepage setting in package.json and run:
 ```bash  
-npm deploy
+npm run deploy
 ```  
 or  
 ```  
-yarn run deploy
+yarn deploy
 ```  
 
 ## License  
